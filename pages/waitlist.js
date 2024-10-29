@@ -10,6 +10,7 @@ import {
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import { styled } from "@mui/system";
+import Head from "next/head";
 
 // Google Apps Script URL
 const GOOGLE_SHEETS_URL =
@@ -65,8 +66,16 @@ export default function Waitlist() {
 
   return (
     <>
+      <Head>
+        <title>Waitlist | Contrario</title>
+        <meta
+          name="description"
+          content="Join the waitlist for Contrario's AI-powered talent screening tool."
+        />
+      </Head>
+      ;{/* Navbar */}
       <NavBar />
-
+      {/* Main content */}
       <Container
         maxWidth={false}
         sx={{
@@ -84,14 +93,14 @@ export default function Waitlist() {
             gutterBottom
             sx={{ fontWeight: "bold", color: "black" }}
           >
-            Join the Waitlist for Contrario AI software
+            Join the Waitlist for Contrario AI
           </Typography>
           <Typography
             variant="body1"
             gutterBottom
             sx={{ color: "black", marginBottom: 4 }}
           >
-            Sign up to stay updated on our AI screening agent software.
+            Sign up to stay updated on our latest software.
           </Typography>
           <form onSubmit={handleSubmit} noValidate autoComplete="off">
             <Typography
@@ -111,6 +120,8 @@ export default function Waitlist() {
               fullWidth
               margin="dense"
               required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               value={name}
               onChange={(e) => setName(e.target.value)}
               InputProps={{
@@ -156,6 +167,7 @@ export default function Waitlist() {
               }}
             />
 
+            {/* Company Name Field */}
             <Typography
               variant="subtitle1"
               sx={{
@@ -165,7 +177,39 @@ export default function Waitlist() {
                 marginBottom: "4px",
               }}
             >
-              Company:
+              Company Name:
+            </Typography>
+            <TextField
+              placeholder="Your Company"
+              variant="outlined"
+              fullWidth
+              margin="dense"
+              required
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+              InputProps={{
+                style: { color: "black", fontFamily: "Inter, sans-serif" },
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": { borderColor: "black" },
+                  "&:hover fieldset": { borderColor: "black" },
+                  "&.Mui-focused fieldset": { borderColor: "black" },
+                },
+              }}
+            />
+
+            {/* Company Type Dropdown */}
+            <Typography
+              variant="subtitle1"
+              sx={{
+                fontWeight: "bold",
+                color: "black",
+                fontSize: "20px",
+                marginBottom: "4px",
+              }}
+            >
+              Company Type:
             </Typography>
             <TextField
               select
@@ -187,7 +231,9 @@ export default function Waitlist() {
                   "&:hover fieldset": { borderColor: "black" },
                   "&.Mui-focused fieldset": { borderColor: "black" },
                 },
-                "& .MuiSelect-icon": { color: "black" },
+                "& .MuiSelect-icon": {
+                  color: "black",
+                },
               }}
               SelectProps={{
                 displayEmpty: true,
@@ -195,7 +241,9 @@ export default function Waitlist() {
                   PaperProps: {
                     sx: {
                       bgcolor: "#e0e0e0",
-                      "& .MuiMenuItem-root": { color: "black" },
+                      "& .MuiMenuItem-root": {
+                        color: "black",
+                      },
                       "& .Mui-selected": {
                         backgroundColor: "#c0c0c0 !important",
                       },
@@ -217,9 +265,11 @@ export default function Waitlist() {
               <MenuItem value="other">Other</MenuItem>
             </TextField>
 
+            {/* Conditional Payment Question */}
             {(companyType === "recruiting_agency" ||
               companyType === "series_c_plus" ||
               companyType === "large_corp" ||
+              companyType === "other" ||
               companyType === "university_college") && (
               <>
                 <Typography
@@ -231,8 +281,9 @@ export default function Waitlist() {
                     marginBottom: "4px",
                   }}
                 >
-                  How much would you pay for an AI agent to screen candidates
-                  every month?:
+                  {companyType === "university_college"
+                    ? "How much would you pay monthly for an AI tool to improve student job placement rates?"
+                    : "How much would you pay monthly for an AI agent to screen candidates for you?"}
                 </Typography>
                 <TextField
                   placeholder="2500"
@@ -267,13 +318,14 @@ export default function Waitlist() {
                 fontWeight: "bold",
                 fontFamily: "Inter, sans-serif",
               }}
+              disabled={!isFormValid} // Disable button until form is valid
             >
               Join Waitlist
             </Button>
           </form>
         </FormBox>
       </Container>
-
+      {/* Footer */}
       <Box sx={{ paddingTop: (theme) => theme.spacing(8) }}>
         <Footer />
       </Box>

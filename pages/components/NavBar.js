@@ -1,7 +1,6 @@
 import { AppBar, Toolbar, Button, Box } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 export default function NavBar() {
   return (
@@ -82,8 +81,8 @@ export default function NavBar() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Try Contrario Now{" "}
-            <ArrowForwardIcon sx={{ fontSize: "1rem", ml: 1 }} />
+            Get Started{" "}
+            <span style={{ marginLeft: "8px", fontSize: "1rem" }}>↗</span>
           </Button>
         </Box>
       </Toolbar>

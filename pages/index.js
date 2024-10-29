@@ -140,7 +140,7 @@ export default function Home() {
                 <Typography
                   variant="body1"
                   paragraph
-                  sx={{ fontSize: "1.25rem", color: "#555", marginTop: "16px" }}
+                  sx={{ fontSize: "1rem", color: "#555", marginTop: "16px" }}
                 >
                   Automatically screen candidates on technical and behavioral
                   skills tailored to their resume and job description, with
@@ -170,7 +170,7 @@ export default function Home() {
                       }}
                     >
                       Try Contrario Now{" "}
-                      <span style={{ marginLeft: "8px", fontSize: "1.25rem" }}>
+                      <span style={{ marginLeft: "8px", fontSize: "1rem" }}>
                         ↗
                       </span>
                     </Box>

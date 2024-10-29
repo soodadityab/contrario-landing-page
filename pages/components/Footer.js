@@ -2,17 +2,18 @@ import React from "react";
 import { Box, Typography, Container, Grid, Button } from "@mui/material";
 import { styled, keyframes } from "@mui/system";
 import Image from "next/image";
+import Link from "next/link";
 
 // Keyframes for scrolling animation
 const scrollAnimation = keyframes`
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); } // only scrolls half the distance to loop seamlessly
+  100% { transform: translateX(-50%); }
 `;
 
 // Styled Footer Section
 const FooterSection = styled(Box)(({ theme }) => ({
-  backgroundColor: "#000000", // Black background
-  color: "#ffffff", // White text
+  backgroundColor: "#000000",
+  color: "#ffffff",
   paddingTop: theme.spacing(8),
   paddingBottom: theme.spacing(8),
   textAlign: "center",
@@ -23,25 +24,25 @@ const ScrollingContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   overflow: "hidden",
-  width: "100%", // Full width of footer
-  marginTop: theme.spacing(4), // Space above the scrolling row
-  padding: theme.spacing(2, 0), // Vertical padding
+  width: "100%",
+  marginTop: theme.spacing(4),
+  padding: theme.spacing(2, 0),
 }));
 
 // Inner Scrolling Content
 const ScrollingContent = styled(Box)({
   display: "flex",
   alignItems: "center",
-  animation: `${scrollAnimation} 30s linear infinite`, // Adjusted speed for a smooth scroll
+  animation: `${scrollAnimation} 30s linear infinite`,
   whiteSpace: "nowrap",
   willChange: "transform",
 });
 
 // Logo Container Box for setting consistent height
 const LogoBox = styled(Box)({
-  flex: "0 0 auto", // Prevents logos from shrinking
-  height: "80px", // Consistent logo height
-  margin: "0 48px", // Increased space between logos
+  flex: "0 0 auto",
+  height: "80px",
+  margin: "0 48px",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -95,7 +96,15 @@ export default function Footer() {
 
           {/* Right side: Description */}
           <Grid item xs={12} md={6}>
-            <Typography variant="body1" paragraph>
+            <Typography
+              variant="h7"
+              paragraph
+              sx={{
+                textAlign: "left",
+                color: "lightgray",
+                fontSize: "1.2rem",
+              }}
+            >
               Our team brings firsthand experience from Juniper Networks, NASA,
               and BCG, inspiring us to build Contrario AI to streamline hiring
               through automation.
@@ -140,12 +149,47 @@ export default function Footer() {
           </Typography>
 
           {/* Right: Contact and CTA */}
-          <Box>
-            <Button variant="outlined" color="secondary" sx={{ mr: 2 }}>
-              Contact Us
-            </Button>
-            <Button variant="contained" color="primary">
-              Try Contrario Now
+          <Box display="flex" gap={2}>
+            {/* Waitlist Link */}
+            <Link href="/waitlist" passHref>
+              <Button
+                sx={{
+                  color: "#ffffff",
+                  fontSize: "1.1rem",
+                  fontFamily: "Inter, sans-serif",
+                  fontWeight: "bold",
+                  backgroundColor: "transparent",
+                  "&:hover": {
+                    color: "#888888",
+                    backgroundColor: "transparent",
+                  },
+                }}
+              >
+                Waitlist
+              </Button>
+            </Link>
+
+            {/* Try Contrario Now Button */}
+            <Button
+              sx={{
+                display: "inline-flex",
+                alignItems: "center",
+                backgroundColor: "#fff",
+                color: "#000",
+                padding: "14px 28px",
+                borderRadius: "8px",
+                fontWeight: "600",
+                fontSize: "1rem",
+                fontFamily: "Inter, sans-serif",
+                transition: "background-color 0.3s",
+                "&:hover": { backgroundColor: "#333" },
+              }}
+              href="https://calendly.com/contrarioai/contrario"
+              target="_blank" // Opens in a new tab
+              rel="noopener noreferrer" // Security measure for new tab
+            >
+              Try Contrario Now{" "}
+              <span style={{ marginLeft: "8px", fontSize: "1rem" }}>↗</span>
             </Button>
           </Box>
         </Box>
