@@ -1,70 +1,89 @@
 import { AppBar, Toolbar, Button, Box } from "@mui/material";
-import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link"; // Import Link from Next.js
+import Link from "next/link";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 export default function NavBar() {
-  const [navbarBackground, setNavbarBackground] = useState("transparent");
-  const [textColor, setTextColor] = useState("#ffffff"); // Start with white text
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setNavbarBackground("#ffffff"); // Change to white background
-        setTextColor("#000000"); // Change text to black
-      } else {
-        setNavbarBackground("transparent"); // Transparent background at top
-        setTextColor("#ffffff"); // White text for dark background
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <AppBar
-      position="fixed"
+      position="static" // Static position so it stays at the top of each page but doesn’t scroll with the user
       style={{
-        backgroundColor: navbarBackground,
-        boxShadow: "none", // Remove the white bar/shadow
-        transition: "background-color 0.3s ease", // Smooth transition for bg color
+        backgroundColor: "transparent",
+        boxShadow: "none",
       }}
       elevation={0}
     >
-      <Toolbar sx={{ justifyContent: "space-between" }}>
-        {/* Logo Image on the Left with Auto Height and Pointer on Hover */}
-        <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center" }}>
-          <Image
-            src="/logo.png" // Path to your logo
-            alt="Contrario AI Logo"
-            width={160} // Adjust the width
-            height={40} // This will maintain aspect ratio with auto height
-            layout="intrinsic" // Intrinsic layout maintains the aspect ratio
-            priority // Ensures the logo loads early
-          />
-        </Box>
+      <Toolbar
+        sx={{
+          justifyContent: "space-between",
+          px: 4,
+          fontFamily: "Inter, sans-serif",
+        }}
+      >
+        {/* Logo Image with Link to Homepage */}
+        <Link href="/" passHref>
+          <Box
+            sx={{
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              marginTop: "12px",
+            }}
+          >
+            <Image
+              src="/logo.png"
+              alt="Contrario AI Logo"
+              width={200}
+              height={80}
+              layout="intrinsic"
+              priority
+            />
+          </Box>
+        </Link>
 
         {/* Navigation Links */}
-        <Box>
-          {/* Link the Contact Us button to the contact page */}
-          <Link href="/contact" passHref>
-            <Button sx={{ mx: 2 }} style={{ color: textColor }}>
-              Contact Us
+        <Box display="flex" alignItems="center" sx={{ gap: 4, mr: 8 }}>
+          {/* Waitlist Button */}
+          <Link href="/waitlist" passHref>
+            <Button
+              sx={{
+                color: "#ffffff",
+                fontSize: "1.1rem",
+                fontFamily: "Inter, sans-serif",
+                fontWeight: "bold",
+                fontSize: "18px",
+                backgroundColor: "transparent",
+                "&:hover": {
+                  color: "#888888", // Dim the text color on hover
+                  backgroundColor: "transparent",
+                },
+              }}
+            >
+              Join Waitlist
             </Button>
           </Link>
 
-          {/* Open Calendly in a new tab */}
+          {/* Get Started Button */}
           <Button
             variant="outlined"
-            style={{ color: textColor, borderColor: textColor }}
+            sx={{
+              color: "#000000", // Black text
+              backgroundColor: "#ffffff", // White background
+              borderColor: "#ffffff",
+              fontSize: "1.1rem",
+              padding: "8px 16px",
+              fontFamily: "Inter, sans-serif",
+              "&:hover": {
+                backgroundColor: "#000000", // Black background on hover
+                color: "#ffffff", // White text on hover
+              },
+            }}
             href="https://calendly.com/contrarioai/contrario"
-            target="_blank" // Open in new tab
-            rel="noopener noreferrer" // Security best practice for external links
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Get Started
+            Try Contrario Now{" "}
+            <ArrowForwardIcon sx={{ fontSize: "1rem", ml: 1 }} />
           </Button>
         </Box>
       </Toolbar>

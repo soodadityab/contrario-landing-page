@@ -2,15 +2,28 @@ import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 
 const SoundWaveAnimation = () => {
-  const words = ["AI-Driven", "Practice", "Confidence", "Interview", "Prepare"];
+  const words = [
+    "Accuracy",
+    "Efficiency",
+    "Right Fit",
+    "Talent",
+    "Precision",
+    "Insights",
+    "Alignment",
+  ];
   const [currentWord, setCurrentWord] = useState(words[0]);
+  const [isFading, setIsFading] = useState(true);
 
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
-      index = (index + 1) % words.length;
-      setCurrentWord(words[index]);
-    }, 4000); // Change word every 4 seconds
+      setIsFading(false);
+      setTimeout(() => {
+        index = (index + 1) % words.length;
+        setCurrentWord(words[index]);
+        setIsFading(true);
+      }, 500); // Delay to sync with fade-out animation
+    }, 7000); // Word change interval matches with animation loop
 
     return () => clearInterval(interval);
   }, []);
@@ -20,39 +33,32 @@ const SoundWaveAnimation = () => {
       sx={{
         position: "relative",
         width: "100%",
-        height: "400px",
-        mt: 4,
+        height: "800px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        overflow: "hidden",
+        backgroundColor: "transparent",
+        mt: -15,
       }}
     >
-      {/* Multiple SVG Soundwaves */}
-      <svg width="100%" height="100%" viewBox="0 0 800 400">
-        {/* First Soundwave */}
-        <path
-          d="M0,200 Q100,100 200,200 T400,200 T600,200 T800,200"
-          stroke="#00ffcc"
-          strokeWidth="3"
-          fill="none"
-          className="soundwave"
-        />
-        {/* Second Soundwave */}
-        <path
-          d="M0,220 Q150,120 300,220 T600,220 T800,220"
-          stroke="#00ffff"
-          strokeWidth="2"
-          fill="none"
-          className="soundwave"
-        />
-        {/* Third Soundwave */}
-        <path
-          d="M0,180 Q200,80 400,180 T800,180"
-          stroke="#00aaff"
-          strokeWidth="1.5"
-          fill="none"
-          className="soundwave"
-        />
+      {/* SVG creating a centered spiral pattern */}
+      <svg width="100%" height="100%" viewBox="0 0 1200 1200">
+        {[...Array(50)].map((_, i) => {
+          const radius = 300 + i * 6; // Moderate spiral for better spacing
+          return (
+            <circle
+              key={i}
+              cx="600"
+              cy="600"
+              r={radius}
+              stroke={`hsl(${200 + i * 5}, 100%, 70%)`} // Adjusted gradient for a consistent flow
+              strokeWidth="1.2"
+              fill="none"
+              className="soundwave"
+            />
+          );
+        })}
       </svg>
 
       {/* Animated Word in the Center */}
@@ -63,38 +69,31 @@ const SoundWaveAnimation = () => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           color: "#ffffff",
-          fontSize: "3em",
+          fontSize: "2.3em", // Slightly reduced size for better proportional balance
+          fontWeight: "bold",
           textAlign: "center",
-          opacity: 0,
-          animation: "fadeIn 4s ease-in-out infinite",
+          opacity: isFading ? 1 : 0,
+          transition: "opacity 0.5s ease-in-out", // Faster fade-in/out transition
+          zIndex: 1,
         }}
       >
         {currentWord}
       </Box>
 
+      {/* CSS for the animations */}
       <style jsx global>{`
         .soundwave {
-          stroke-dasharray: 1000;
-          stroke-dashoffset: 1000;
-          animation: wave 6s ease-in-out infinite;
+          stroke-dasharray: 3600;
+          stroke-dashoffset: 3600;
+          animation: wave 7s linear infinite; // Faster continuous animation with no abrupt restart
         }
 
         @keyframes wave {
           0% {
-            stroke-dashoffset: 1000;
+            stroke-dashoffset: 3600;
           }
           100% {
             stroke-dashoffset: 0;
-          }
-        }
-
-        @keyframes fadeIn {
-          0%,
-          100% {
-            opacity: 0;
-          }
-          50% {
-            opacity: 1;
           }
         }
       `}</style>
