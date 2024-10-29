@@ -19,11 +19,17 @@ const GOOGLE_SHEETS_URL =
 // Styled Box for form background
 const FormBox = styled(Box)(({ theme }) => ({
   backgroundColor: "#f0f0f0",
-  padding: theme.spacing(8),
+  padding: theme.spacing(4, 4), // Smaller padding on mobile
   borderRadius: theme.spacing(1),
   boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-  width: "80%",
+  width: "100%",
   fontFamily: "Inter, sans-serif",
+  [theme.breakpoints.up("sm")]: {
+    padding: theme.spacing(6),
+  },
+  [theme.breakpoints.down("700")]: {
+    maxWidth: "480px", // Limit width for better readability on mobile
+  },
 }));
 
 export default function Waitlist() {
@@ -34,7 +40,6 @@ export default function Waitlist() {
   const [companyName, setCompanyName] = useState("");
   const isFormValid = name && email && companyName && companyType;
 
-  // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -68,6 +73,12 @@ export default function Waitlist() {
     }
   };
 
+  // Dynamic question based on company type
+  const questionText =
+    companyType === "university_college"
+      ? "How much would you be willing to pay for an AI agent that improves student placement success rates?"
+      : "How much would you pay for an AI agent to screen candidates every month?";
+
   return (
     <>
       <Head>
@@ -81,209 +92,217 @@ export default function Waitlist() {
       <NavBar />
       {/* Main content */}
       <Container
-        maxWidth={false}
+        maxWidth="sm"
         sx={{
           minHeight: "100vh",
           display: "flex",
           alignItems: "flex-start",
           justifyContent: "center",
           paddingY: 8,
-          paddingTop: 16,
+          paddingTop: 12,
         }}
       >
         <FormBox>
+          {/* Two-line title with responsive font size */}
           <Typography
             variant="h4"
             gutterBottom
-            sx={{ fontWeight: "bold", color: "black" }}
+            sx={{
+              fontWeight: "bold",
+              color: "black",
+              fontSize: { xs: "1.5rem", sm: "2rem" },
+              lineHeight: "1.2",
+              textAlign: "center",
+              whiteSpace: "normal", // Ensures it breaks correctly on small screens
+            }}
           >
-            Join the Waitlist for Contrario AI
+            Join the Waitlist for <br /> Contrario AI
           </Typography>
           <Typography
             variant="body1"
             gutterBottom
-            sx={{ color: "black", marginBottom: 4 }}
+            sx={{ color: "black", marginBottom: 4, textAlign: "center" }}
           >
             Sign up to stay updated on our latest software.
           </Typography>
           <form onSubmit={handleSubmit} noValidate autoComplete="off">
-            <Typography
-              variant="subtitle1"
-              sx={{
-                fontWeight: "bold",
-                color: "black",
-                fontSize: "20px",
-                marginBottom: "4px",
-              }}
-            >
-              Name:
-            </Typography>
-            <TextField
-              placeholder="First Last"
-              variant="outlined"
-              fullWidth
-              margin="dense"
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              InputProps={{
-                style: { color: "black", fontFamily: "Inter, sans-serif" },
-              }}
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { borderColor: "black" },
-                  "&:hover fieldset": { borderColor: "black" },
-                  "&.Mui-focused fieldset": { borderColor: "black" },
-                },
-              }}
-            />
+            {/* Form Fields */}
+            <Box sx={{ mb: 2 }}>
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  fontWeight: "bold",
+                  color: "black",
+                  fontSize: "16px",
+                  mb: 0.5,
+                }}
+              >
+                Name:
+              </Typography>
+              <TextField
+                placeholder="First Last"
+                variant="outlined"
+                fullWidth
+                margin="dense"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                InputProps={{
+                  style: { color: "black", fontFamily: "Inter, sans-serif" },
+                }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": { borderColor: "black" },
+                    "&:hover fieldset": { borderColor: "black" },
+                    "&.Mui-focused fieldset": { borderColor: "black" },
+                  },
+                }}
+              />
+            </Box>
 
-            <Typography
-              variant="subtitle1"
-              sx={{
-                fontWeight: "bold",
-                color: "black",
-                fontSize: "20px",
-                marginBottom: "2px",
-              }}
-            >
-              Email:
-            </Typography>
-            <TextField
-              placeholder="example@domain.com"
-              variant="outlined"
-              fullWidth
-              margin="dense"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              InputProps={{
-                style: { color: "black", fontFamily: "Inter, sans-serif" },
-              }}
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { borderColor: "black" },
-                  "&:hover fieldset": { borderColor: "black" },
-                  "&.Mui-focused fieldset": { borderColor: "black" },
-                },
-              }}
-            />
+            <Box sx={{ mb: 2 }}>
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  fontWeight: "bold",
+                  color: "black",
+                  fontSize: "16px",
+                  mb: 0.5,
+                }}
+              >
+                Email:
+              </Typography>
+              <TextField
+                placeholder="example@domain.com"
+                variant="outlined"
+                fullWidth
+                margin="dense"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                InputProps={{
+                  style: { color: "black", fontFamily: "Inter, sans-serif" },
+                }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": { borderColor: "black" },
+                    "&:hover fieldset": { borderColor: "black" },
+                    "&.Mui-focused fieldset": { borderColor: "black" },
+                  },
+                }}
+              />
+            </Box>
 
-            {/* Company Name Field */}
-            <Typography
-              variant="subtitle1"
-              sx={{
-                fontWeight: "bold",
-                color: "black",
-                fontSize: "20px",
-                marginBottom: "4px",
-              }}
-            >
-              Company Name:
-            </Typography>
-            <TextField
-              placeholder="Your Company"
-              variant="outlined"
-              fullWidth
-              margin="dense"
-              required
-              value={companyName}
-              onChange={(e) => setCompanyName(e.target.value)}
-              InputProps={{
-                style: { color: "black", fontFamily: "Inter, sans-serif" },
-              }}
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { borderColor: "black" },
-                  "&:hover fieldset": { borderColor: "black" },
-                  "&.Mui-focused fieldset": { borderColor: "black" },
-                },
-              }}
-            />
+            <Box sx={{ mb: 2 }}>
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  fontWeight: "bold",
+                  color: "black",
+                  fontSize: "16px",
+                  mb: 0.5,
+                }}
+              >
+                Company Name:
+              </Typography>
+              <TextField
+                placeholder="Your Company"
+                variant="outlined"
+                fullWidth
+                margin="dense"
+                required
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+                InputProps={{
+                  style: { color: "black", fontFamily: "Inter, sans-serif" },
+                }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": { borderColor: "black" },
+                    "&:hover fieldset": { borderColor: "black" },
+                    "&.Mui-focused fieldset": { borderColor: "black" },
+                  },
+                }}
+              />
+            </Box>
 
-            {/* Company Type Field with Dropdown */}
-            <Typography
-              variant="subtitle1"
-              sx={{
-                fontWeight: "bold",
-                color: "black",
-                fontSize: "20px",
-                marginBottom: "4px",
-              }}
-            >
-              Company Type:
-            </Typography>
-            <TextField
-              select
-              variant="outlined"
-              fullWidth
-              margin="dense"
-              required
-              value={companyType}
-              onChange={(e) => setCompanyType(e.target.value)}
-              InputProps={{
-                style: {
-                  color: companyType ? "black" : "#888888",
-                  fontFamily: "Inter, sans-serif",
-                },
-              }}
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { borderColor: "black" },
-                  "&:hover fieldset": { borderColor: "black" },
-                  "&.Mui-focused fieldset": { borderColor: "black" },
-                },
-                "& .MuiSelect-icon": {
-                  color: "black", // Set the arrow color to black
-                },
-              }}
-              SelectProps={{
-                displayEmpty: true,
-                MenuProps: {
-                  PaperProps: {
-                    sx: {
-                      bgcolor: "#e0e0e0", // Set dropdown background color
-                      "& .MuiMenuItem-root": {
-                        color: "black", // Set dropdown item text color to black
-                      },
-                      "& .Mui-selected": {
-                        backgroundColor: "#c0c0c0 !important",
-                      },
-                      "& .MuiMenuItem-root:hover": {
-                        backgroundColor: "#b0b0b0",
+            <Box sx={{ mb: 2 }}>
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  fontWeight: "bold",
+                  color: "black",
+                  fontSize: "16px",
+                  mb: 0.5,
+                }}
+              >
+                Company Type:
+              </Typography>
+              <TextField
+                select
+                variant="outlined"
+                fullWidth
+                margin="dense"
+                required
+                value={companyType}
+                onChange={(e) => setCompanyType(e.target.value)}
+                InputProps={{
+                  style: {
+                    color: companyType ? "black" : "#888888",
+                    fontFamily: "Inter, sans-serif",
+                  },
+                }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": { borderColor: "black" },
+                    "&:hover fieldset": { borderColor: "black" },
+                    "&.Mui-focused fieldset": { borderColor: "black" },
+                  },
+                  "& .MuiSelect-icon": { color: "black" },
+                }}
+                SelectProps={{
+                  displayEmpty: true,
+                  MenuProps: {
+                    PaperProps: {
+                      sx: {
+                        bgcolor: "#e0e0e0",
+                        "& .MuiMenuItem-root": { color: "black" },
+                        "& .Mui-selected": {
+                          backgroundColor: "#c0c0c0 !important",
+                        },
+                        "& .MuiMenuItem-root:hover": {
+                          backgroundColor: "#b0b0b0",
+                        },
                       },
                     },
                   },
-                },
-              }}
-            >
-              <MenuItem value="" disabled sx={{ color: "black" }}>
-                Choose below:
-              </MenuItem>
-              <MenuItem value="recruiting_agency">Recruiting Agency</MenuItem>
-              <MenuItem value="series_c_plus">Series C+ Company</MenuItem>
-              <MenuItem value="large_corp">Large Corporation</MenuItem>
-              <MenuItem value="university_college">University/College</MenuItem>
-              <MenuItem value="other">Other</MenuItem>
-            </TextField>
+                }}
+              >
+                <MenuItem value="" disabled>
+                  Choose below:
+                </MenuItem>
+                <MenuItem value="recruiting_agency">Recruiting Agency</MenuItem>
+                <MenuItem value="series_c_plus">Series C+ Company</MenuItem>
+                <MenuItem value="large_corp">Large Corporation</MenuItem>
+                <MenuItem value="university_college">
+                  University/College
+                </MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </TextField>
+            </Box>
 
-            {/* Conditional Payment Field */}
-            {companyType === "recruiting_agency" ||
-            companyType === "series_c_plus" ||
-            companyType === "large_corp" ||
-            companyType === "university_college" ? (
-              <>
+            {companyType && (
+              <Box sx={{ mb: 2 }}>
                 <Typography
                   variant="subtitle1"
                   sx={{
                     fontWeight: "bold",
                     color: "black",
-                    fontSize: "20px",
-                    marginBottom: "4px",
+                    fontSize: "16px",
+                    mb: 0.5,
                   }}
                 >
-                  How much would you pay for an AI agent to screen candidates
-                  every month?:
+                  {questionText}
                 </Typography>
                 <TextField
                   placeholder="2500"
@@ -293,7 +312,7 @@ export default function Waitlist() {
                   margin="dense"
                   required
                   value={payment}
-                  onChange={(e) => setPayment(e.target.value)} // Added onChange handler
+                  onChange={(e) => setPayment(e.target.value)}
                   InputProps={{
                     style: { color: "black", fontFamily: "Inter, sans-serif" },
                   }}
@@ -305,8 +324,8 @@ export default function Waitlist() {
                     },
                   }}
                 />
-              </>
-            ) : null}
+              </Box>
+            )}
 
             <Button
               type="submit"
@@ -314,7 +333,7 @@ export default function Waitlist() {
               color="primary"
               fullWidth
               sx={{
-                marginTop: 4,
+                marginTop: 3,
                 fontWeight: "bold",
                 fontFamily: "Inter, sans-serif",
               }}
@@ -325,7 +344,6 @@ export default function Waitlist() {
           </form>
         </FormBox>
       </Container>
-      {/* Footer */}
       <Box sx={{ paddingTop: (theme) => theme.spacing(8) }}>
         <Footer />
       </Box>

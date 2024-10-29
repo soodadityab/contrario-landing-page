@@ -12,7 +12,10 @@ const Section = styled(Box)(({ theme, bgColor, textColor }) => ({
   display: "flex",
   alignItems: "center",
   minHeight: "100vh",
-  padding: theme.spacing(10),
+  padding: theme.spacing(8),
+  [theme.breakpoints.down("sm")]: {
+    padding: theme.spacing(4),
+  },
 }));
 
 export default function Home() {
@@ -21,84 +24,66 @@ export default function Home() {
       {/* Navbar at the top */}
       <NavBar />
 
-      {/* Hero Section with Split Layout */}
+      {/* Hero Section */}
       <Section bgColor="#000000" textColor="#ffffff">
         <Container maxWidth="xl">
           <Grid container alignItems="center" spacing={4}>
             {/* Left Side - Text Content */}
             <Grid item xs={12} md={6}>
-              <Box sx={{ textAlign: "left", mt: -10 }}>
-                {" "}
-                {/* Move text content higher */}
+              <Box sx={{ textAlign: "left", mt: 0 }}>
                 <Typography
                   variant="h1"
                   gutterBottom
                   sx={{
-                    fontSize: "4rem",
+                    fontSize: "clamp(2rem, 5vw, 4rem)", // Dynamically adjust font size for two lines
                     fontWeight: "bold",
                     lineHeight: "1.2",
-                    marginBottom: "40px", // Reduced bottom margin
+                    marginBottom: "20px",
                     maxWidth: "95%",
                   }}
                 >
                   AI-Powered Talent Screening
                 </Typography>
-                <Typography
-                  variant="h5"
-                  paragraph
-                  sx={{
-                    fontSize: "1.4rem",
-                    lineHeight: "1.5",
-                    marginBottom: "30px", // Reduced bottom margin
-                    maxWidth: "95%",
-                  }}
-                >
-                  Recruitment agencies, Series C+ companies, & talent
-                  acquisition teams leverage Contrario to compress time-to-hire,
-                  vet qualified candidates, and automate their hiring processes.
-                </Typography>
-                <Box sx={{ mt: 6 }}>
-                  <Button
-                    variant="outlined"
+                <Box sx={{ mt: 2 }}>
+                  <Typography
+                    variant="h5"
+                    paragraph
                     sx={{
-                      color: "#000000",
-                      backgroundColor: "#ffffff",
-                      borderColor: "#ffffff",
-                      fontSize: "1.2rem",
-                      padding: "10px 20px",
-                      fontFamily: "Inter, sans-serif",
-                      fontWeight: "bold",
-                      "&:hover": {
-                        backgroundColor: "#000000",
-                        color: "#ffffff",
-                      },
+                      fontSize: "clamp(1rem, 2.5vw, 1.4rem)", // Dynamically adjust font size for four lines
+                      lineHeight: "1.5",
+                      marginBottom: "10px",
+                      maxWidth: "95%",
                     }}
-                    href="https://calendly.com/contrarioai/contrario"
-                    target="_blank"
-                    rel="noopener noreferrer"
                   >
-                    Try Contrario Now{" "}
-                    <span style={{ marginLeft: "8px", fontSize: "1.25rem" }}>
-                      ↗
-                    </span>
-                  </Button>
+                    Recruitment agencies, Series C+ companies, & talent
+                    acquisition teams leverage Contrario to compress
+                    time-to-hire, vet qualified candidates, and automate their
+                    hiring processes.
+                  </Typography>
                 </Box>
               </Box>
             </Grid>
 
-            {/* Right Side - Soundwave Animation */}
-            <Grid item xs={12} md={6} display="flex" justifyContent="center">
+            {/* Right Side - Centered Animation with reduced gap */}
+            <Grid
+              item
+              xs={12}
+              md={6}
+              display="flex"
+              justifyContent="center"
+              sx={{ mt: -4 }}
+            >
               <SoundWaveAnimation />
             </Grid>
           </Grid>
         </Container>
       </Section>
 
-      {/* Info Section 1 */}
+      {/* Info Section */}
       <Section
         bgColor="#ffffff"
         textColor="#000000"
-        style={{ height: "100vh", fontFamily: "Inter, sans-serif" }}
+        style={{ fontFamily: "Inter, sans-serif" }}
       >
         <Container
           maxWidth="xl"
@@ -179,26 +164,25 @@ export default function Home() {
               </Box>
             </Grid>
 
-            {/* Right Side - Image */}
+            {/* Right Side - Strategically Placed Larger Image on Mobile */}
             <Grid item xs={12} md={7}>
               <Box
                 sx={{
                   position: "relative",
-                  width: "100%",
-                  height: "100%",
-                  padding: "20px",
-                  border: "1px solid #e0e0e0",
-                  borderRadius: "16px",
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                  width: { xs: "100%", sm: "98%" }, // Full width on mobile, slight padding on larger screens
+                  padding: { xs: "0", sm: "10px" }, // Remove padding on mobile to maximize image size
+                  border: { xs: "none", sm: "1px solid #e0e0e0" },
+                  borderRadius: { xs: "0", sm: "16px" },
+                  boxShadow: { sm: "0 4px 12px rgba(0, 0, 0, 0.1)" },
                   overflow: "hidden",
                 }}
               >
                 <Image
-                  src="/product.png" // Ensure the image is named product.png in the public folder
+                  src="/product.png"
                   alt="Contrario AI Product Interface"
                   layout="responsive"
-                  width={1000} // Adjust width for responsiveness
-                  height={600} // Adjust height to match aspect ratio
+                  width={1000}
+                  height={600}
                   objectFit="cover"
                 />
               </Box>

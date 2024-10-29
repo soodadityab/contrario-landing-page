@@ -81,28 +81,44 @@ export default function Footer() {
   return (
     <FooterSection>
       <Container maxWidth="lg">
-        <Grid container spacing={4} alignItems="center">
-          {/* Left-aligned Title with Two Lines */}
-          <Grid item xs={12} md={6}>
+        <Grid
+          container
+          spacing={2}
+          direction="row"
+          wrap="nowrap" // Prevents wrapping
+          alignItems="center"
+          justifyContent="space-between"
+          sx={{
+            flexDirection: { xs: "row", sm: "row" }, // Row on all screen sizes
+            overflowX: "auto", // Allows scrolling on very small screens
+          }}
+        >
+          {/* Left-aligned Title */}
+          <Grid item xs={6}>
             <Typography
               variant="h3"
               gutterBottom
-              sx={{ fontWeight: "bold", textAlign: "left", fontSize: "3rem" }}
+              sx={{
+                fontWeight: "bold",
+                textAlign: "left",
+                fontSize: { xs: "1.2rem", sm: "1.5rem" },
+                lineHeight: "1.2",
+              }}
             >
               Built by the Best <br />
               Engineers From:
             </Typography>
           </Grid>
 
-          {/* Right side: Description */}
-          <Grid item xs={12} md={6}>
+          {/* Right-aligned Description */}
+          <Grid item xs={6}>
             <Typography
-              variant="h7"
+              variant="body1"
               paragraph
               sx={{
                 textAlign: "left",
                 color: "lightgray",
-                fontSize: "1.2rem",
+                fontSize: { xs: "0.8rem", sm: "1rem" },
               }}
             >
               Our team brings firsthand experience from Juniper Networks, NASA,
@@ -115,7 +131,6 @@ export default function Footer() {
         {/* Scrolling Logo Row */}
         <ScrollingContainer>
           <ScrollingContent>
-            {/* Display logos twice for seamless infinite scroll */}
             {logos.map((logo, index) => (
               <LogoBox key={index}>
                 <Image
@@ -142,20 +157,25 @@ export default function Footer() {
         </ScrollingContainer>
 
         {/* Footer Bottom Row */}
-        <Box mt={4} display="flex" justifyContent="space-between">
-          {/* Left: Copyright */}
-          <Typography variant="body2">
-            © 2024 Contrario. All rights reserved.
-          </Typography>
-
-          {/* Right: Contact and CTA */}
-          <Box display="flex" gap={2}>
-            {/* Waitlist Link */}
+        <Box
+          mt={4}
+          display="flex"
+          justifyContent="center"
+          flexDirection={{ xs: "column", sm: "row" }}
+          alignItems="center"
+          gap={{ xs: 2, sm: 4 }}
+        >
+          <Box
+            display="flex"
+            gap={2}
+            justifyContent="center"
+            flexDirection={{ xs: "row", sm: "row" }}
+          >
             <Link href="/waitlist" passHref>
               <Button
                 sx={{
                   color: "#ffffff",
-                  fontSize: "1.1rem",
+                  fontSize: "clamp(0.9rem, 1.1rem, 1.1rem)",
                   fontFamily: "Inter, sans-serif",
                   fontWeight: "bold",
                   backgroundColor: "transparent",
@@ -169,29 +189,33 @@ export default function Footer() {
               </Button>
             </Link>
 
-            {/* Try Contrario Now Button */}
             <Button
               sx={{
                 display: "inline-flex",
                 alignItems: "center",
                 backgroundColor: "#fff",
                 color: "#000",
-                padding: "14px 28px",
+                padding: "10px 20px",
                 borderRadius: "8px",
                 fontWeight: "600",
-                fontSize: "1rem",
+                fontSize: "clamp(0.9rem, 1.1rem, 1rem)",
                 fontFamily: "Inter, sans-serif",
                 transition: "background-color 0.3s",
+                whiteSpace: "nowrap",
                 "&:hover": { backgroundColor: "#333" },
               }}
               href="https://calendly.com/contrarioai/contrario"
-              target="_blank" // Opens in a new tab
-              rel="noopener noreferrer" // Security measure for new tab
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Try Contrario Now{" "}
               <span style={{ marginLeft: "8px", fontSize: "1rem" }}>↗</span>
             </Button>
           </Box>
+
+          <Typography variant="body2" sx={{ mt: { xs: 2, sm: 0 } }}>
+            © 2024 Contrario. All rights reserved.
+          </Typography>
         </Box>
       </Container>
     </FooterSection>
