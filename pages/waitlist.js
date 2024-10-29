@@ -11,34 +11,71 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import { styled } from "@mui/system";
 
+// Google Apps Script URL
+const GOOGLE_SHEETS_URL =
+  "https://script.google.com/a/macros/stanford.edu/s/AKfycbxI-sQY8eHA1LuPCqSkcbzZq84ch-5E_zGDUoWbQnaFhgJHu4LW2aYVVhX2C5ox3rXEBA/exec";
+
 // Styled Box for form background
 const FormBox = styled(Box)(({ theme }) => ({
-  backgroundColor: "#f0f0f0", // Light gray background for form
+  backgroundColor: "#f0f0f0",
   padding: theme.spacing(8),
   borderRadius: theme.spacing(1),
   boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-  width: "80%", // Extended width to take up more screen space
-  fontFamily: "Inter, sans-serif", // Apply Inter font to entire form
+  width: "80%",
+  fontFamily: "Inter, sans-serif",
 }));
 
 export default function Waitlist() {
-  const [companyType, setCompanyType] = useState(""); // State to manage dropdown selection
+  const [companyType, setCompanyType] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [payment, setPayment] = useState("");
+
+  // Submit handler
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = {
+      name,
+      email,
+      companyType,
+      payment,
+    };
+
+    try {
+      await fetch(GOOGLE_SHEETS_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        mode: "no-cors",
+      });
+
+      alert("Submission successful!");
+      setName("");
+      setEmail("");
+      setCompanyType("");
+      setPayment("");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("An error occurred. Please try again later.");
+    }
+  };
 
   return (
     <>
-      {/* Navbar */}
       <NavBar />
 
-      {/* Main content */}
       <Container
-        maxWidth={false} // Extend to full screen width
+        maxWidth={false}
         sx={{
-          minHeight: "100vh", // Full viewport height
+          minHeight: "100vh",
           display: "flex",
-          alignItems: "flex-start", // Align form lower on the page
+          alignItems: "flex-start",
           justifyContent: "center",
           paddingY: 8,
-          paddingTop: 16, // Lower form by adding top padding
+          paddingTop: 16,
         }}
       >
         <FormBox>
@@ -56,15 +93,14 @@ export default function Waitlist() {
           >
             Sign up to stay updated on our AI screening agent software.
           </Typography>
-          <form noValidate autoComplete="off">
-            {/* Name Field */}
+          <form onSubmit={handleSubmit} noValidate autoComplete="off">
             <Typography
               variant="subtitle1"
               sx={{
                 fontWeight: "bold",
                 color: "black",
                 fontSize: "20px",
-                marginBottom: "4px", // Reduces space below the label
+                marginBottom: "4px",
               }}
             >
               Name:
@@ -73,8 +109,10 @@ export default function Waitlist() {
               placeholder="First Last"
               variant="outlined"
               fullWidth
-              margin="dense" // Adjusts spacing to reduce gap
+              margin="dense"
               required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               InputProps={{
                 style: { color: "black", fontFamily: "Inter, sans-serif" },
               }}
@@ -87,14 +125,13 @@ export default function Waitlist() {
               }}
             />
 
-            {/* Email Field */}
             <Typography
               variant="subtitle1"
               sx={{
                 fontWeight: "bold",
                 color: "black",
                 fontSize: "20px",
-                marginBottom: "2px", // Reduces space below the label
+                marginBottom: "2px",
               }}
             >
               Email:
@@ -103,8 +140,10 @@ export default function Waitlist() {
               placeholder="example@domain.com"
               variant="outlined"
               fullWidth
-              margin="dense" // Adjusts spacing to reduce gap
+              margin="dense"
               required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               InputProps={{
                 style: { color: "black", fontFamily: "Inter, sans-serif" },
               }}
@@ -117,14 +156,13 @@ export default function Waitlist() {
               }}
             />
 
-            {/* Company Field with Dropdown */}
             <Typography
               variant="subtitle1"
               sx={{
                 fontWeight: "bold",
                 color: "black",
                 fontSize: "20px",
-                marginBottom: "4px", // Reduces space below the label
+                marginBottom: "4px",
               }}
             >
               Company:
@@ -133,10 +171,10 @@ export default function Waitlist() {
               select
               variant="outlined"
               fullWidth
-              margin="dense" // Adjusts spacing to reduce gap
+              margin="dense"
               required
-              value={companyType} // Controlled value
-              onChange={(e) => setCompanyType(e.target.value)} // Update state on change
+              value={companyType}
+              onChange={(e) => setCompanyType(e.target.value)}
               InputProps={{
                 style: {
                   color: companyType ? "black" : "#888888",
@@ -149,31 +187,26 @@ export default function Waitlist() {
                   "&:hover fieldset": { borderColor: "black" },
                   "&.Mui-focused fieldset": { borderColor: "black" },
                 },
-                "& .MuiSelect-icon": {
-                  color: "black", // Set the arrow color to black
-                },
+                "& .MuiSelect-icon": { color: "black" },
               }}
               SelectProps={{
-                displayEmpty: true, // Show the placeholder text in the dropdown box
+                displayEmpty: true,
                 MenuProps: {
                   PaperProps: {
                     sx: {
-                      bgcolor: "#e0e0e0", // Set dropdown background color
-                      "& .MuiMenuItem-root": {
-                        color: "black", // Set dropdown item text color to black
-                      },
+                      bgcolor: "#e0e0e0",
+                      "& .MuiMenuItem-root": { color: "black" },
                       "& .Mui-selected": {
-                        backgroundColor: "#c0c0c0 !important", // Selected item background
+                        backgroundColor: "#c0c0c0 !important",
                       },
                       "& .MuiMenuItem-root:hover": {
-                        backgroundColor: "#b0b0b0", // Hover color for options
+                        backgroundColor: "#b0b0b0",
                       },
                     },
                   },
                 },
               }}
             >
-              {/* Placeholder option */}
               <MenuItem value="" disabled sx={{ color: "black" }}>
                 Choose below:
               </MenuItem>
@@ -184,62 +217,48 @@ export default function Waitlist() {
               <MenuItem value="other">Other</MenuItem>
             </TextField>
 
-            {/* Conditional Payment Question */}
-            {companyType === "recruiting_agency" ||
-            companyType === "series_c_plus" ||
-            companyType === "large_corp" ? (
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  fontWeight: "bold",
-                  color: "black",
-                  fontSize: "20px",
-                  marginBottom: "4px", // Reduces space below the label
-                }}
-              >
-                How much would you pay for an AI agent to screen candidates for
-                you every month?:
-              </Typography>
-            ) : companyType === "university_college" ? (
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  fontWeight: "bold",
-                  color: "black",
-                  fontSize: "20px",
-                  marginBottom: "4px", // Reduces space below the label
-                }}
-              >
-                How much would you pay every month for an AI agent that helps
-                students secure better job roles?:
-              </Typography>
-            ) : null}
-            {companyType === "recruiting_agency" ||
-            companyType === "series_c_plus" ||
-            companyType === "large_corp" ||
-            companyType === "university_college" ? (
-              <TextField
-                placeholder="2500"
-                variant="outlined"
-                type="number"
-                fullWidth
-                margin="dense" // Adjusts spacing to reduce gap
-                required
-                InputProps={{
-                  style: { color: "black", fontFamily: "Inter, sans-serif" },
-                }}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": { borderColor: "black" },
-                    "&:hover fieldset": { borderColor: "black" },
-                    "&.Mui-focused fieldset": { borderColor: "black" },
-                  },
-                }}
-              />
-            ) : null}
+            {(companyType === "recruiting_agency" ||
+              companyType === "series_c_plus" ||
+              companyType === "large_corp" ||
+              companyType === "university_college") && (
+              <>
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    fontWeight: "bold",
+                    color: "black",
+                    fontSize: "20px",
+                    marginBottom: "4px",
+                  }}
+                >
+                  How much would you pay for an AI agent to screen candidates
+                  every month?:
+                </Typography>
+                <TextField
+                  placeholder="2500"
+                  variant="outlined"
+                  type="number"
+                  fullWidth
+                  margin="dense"
+                  required
+                  value={payment}
+                  onChange={(e) => setPayment(e.target.value)}
+                  InputProps={{
+                    style: { color: "black", fontFamily: "Inter, sans-serif" },
+                  }}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": { borderColor: "black" },
+                      "&:hover fieldset": { borderColor: "black" },
+                      "&.Mui-focused fieldset": { borderColor: "black" },
+                    },
+                  }}
+                />
+              </>
+            )}
 
-            {/* Submit Button */}
             <Button
+              type="submit"
               variant="contained"
               color="primary"
               fullWidth
@@ -255,7 +274,6 @@ export default function Waitlist() {
         </FormBox>
       </Container>
 
-      {/* Footer */}
       <Box sx={{ paddingTop: (theme) => theme.spacing(8) }}>
         <Footer />
       </Box>
