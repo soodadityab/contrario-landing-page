@@ -184,37 +184,59 @@ export default function Waitlist() {
               <MenuItem value="other">Other</MenuItem>
             </TextField>
 
-            {/* Payment Question */}
-            <Typography
-              variant="subtitle1"
-              sx={{
-                fontWeight: "bold",
-                color: "black",
-                fontSize: "20px",
-                marginBottom: "4px", // Reduces space below the label
-              }}
-            >
-              How much would you pay for an AI agent to screen candidates for
-              you every month?:
-            </Typography>
-            <TextField
-              placeholder="2500"
-              variant="outlined"
-              type="number"
-              fullWidth
-              margin="dense" // Adjusts spacing to reduce gap
-              required
-              InputProps={{
-                style: { color: "black", fontFamily: "Inter, sans-serif" },
-              }}
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { borderColor: "black" },
-                  "&:hover fieldset": { borderColor: "black" },
-                  "&.Mui-focused fieldset": { borderColor: "black" },
-                },
-              }}
-            />
+            {/* Conditional Payment Question */}
+            {companyType === "recruiting_agency" ||
+            companyType === "series_c_plus" ||
+            companyType === "large_corp" ? (
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  fontWeight: "bold",
+                  color: "black",
+                  fontSize: "20px",
+                  marginBottom: "4px", // Reduces space below the label
+                }}
+              >
+                How much would you pay for an AI agent to screen candidates for
+                you every month?:
+              </Typography>
+            ) : companyType === "university_college" ? (
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  fontWeight: "bold",
+                  color: "black",
+                  fontSize: "20px",
+                  marginBottom: "4px", // Reduces space below the label
+                }}
+              >
+                How much would you pay every month for an AI agent that helps
+                students secure better job roles?:
+              </Typography>
+            ) : null}
+            {companyType === "recruiting_agency" ||
+            companyType === "series_c_plus" ||
+            companyType === "large_corp" ||
+            companyType === "university_college" ? (
+              <TextField
+                placeholder="2500"
+                variant="outlined"
+                type="number"
+                fullWidth
+                margin="dense" // Adjusts spacing to reduce gap
+                required
+                InputProps={{
+                  style: { color: "black", fontFamily: "Inter, sans-serif" },
+                }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": { borderColor: "black" },
+                    "&:hover fieldset": { borderColor: "black" },
+                    "&.Mui-focused fieldset": { borderColor: "black" },
+                  },
+                }}
+              />
+            ) : null}
 
             {/* Submit Button */}
             <Button

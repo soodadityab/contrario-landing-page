@@ -81,10 +81,15 @@ export default function Footer() {
     <FooterSection>
       <Container maxWidth="lg">
         <Grid container spacing={4} alignItems="center">
-          {/* Left side: Title */}
+          {/* Left-aligned Title with Two Lines */}
           <Grid item xs={12} md={6}>
-            <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold" }}>
-              Built by the Best Engineers From:
+            <Typography
+              variant="h3"
+              gutterBottom
+              sx={{ fontWeight: "bold", textAlign: "left", fontSize: "3rem" }}
+            >
+              Built by the Best <br />
+              Engineers From:
             </Typography>
           </Grid>
 

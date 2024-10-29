@@ -41,7 +41,7 @@ export default function Home() {
                     maxWidth: "95%",
                   }}
                 >
-                  AI-Powered Talent Screening.
+                  AI-Powered Talent Screening
                 </Typography>
                 <Typography
                   variant="h5"
@@ -135,7 +135,7 @@ export default function Home() {
                     color: "#000",
                   }}
                 >
-                  Recruitment software for faster hires.
+                  Recruitment software for faster hires
                 </Typography>
                 <Typography
                   variant="body1"
@@ -145,7 +145,7 @@ export default function Home() {
                   Automatically screen candidates on technical and behavioral
                   skills tailored to their resume and job description, with
                   seamless integration into existing ATS and recruitment
-                  software for streamlined hiring decisions
+                  software for streamlined hiring decisions.
                 </Typography>
                 <Box sx={{ marginTop: "30px" }}>
                   <a
