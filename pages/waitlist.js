@@ -14,7 +14,7 @@ import Head from "next/head";
 
 // Google Apps Script URL
 const GOOGLE_SHEETS_URL =
-  "https://script.google.com/a/macros/stanford.edu/s/AKfycbxI-sQY8eHA1LuPCqSkcbzZq84ch-5E_zGDUoWbQnaFhgJHu4LW2aYVVhX2C5ox3rXEBA/exec";
+  "https://script.google.com/macros/s/AKfycbxI-sQY8eHA1LuPCqSkcbzZq84ch-5E_zGDUoWbQnaFhgJHu4LW2aYVVhX2C5ox3rXEBA/exec";
 
 // Styled Box for form background
 const FormBox = styled(Box)(({ theme }) => ({
@@ -31,6 +31,8 @@ export default function Waitlist() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [payment, setPayment] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const isFormValid = name && email && companyName && companyType;
 
   // Submit handler
   const handleSubmit = async (e) => {
@@ -40,6 +42,7 @@ export default function Waitlist() {
       name,
       email,
       companyType,
+      companyName,
       payment,
     };
 
@@ -57,6 +60,7 @@ export default function Waitlist() {
       setName("");
       setEmail("");
       setCompanyType("");
+      setCompanyName("");
       setPayment("");
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -73,7 +77,7 @@ export default function Waitlist() {
           content="Join the waitlist for Contrario's AI-powered talent screening tool."
         />
       </Head>
-      ;{/* Navbar */}
+      {/* Navbar */}
       <NavBar />
       {/* Main content */}
       <Container
@@ -120,8 +124,6 @@ export default function Waitlist() {
               fullWidth
               margin="dense"
               required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
               value={name}
               onChange={(e) => setName(e.target.value)}
               InputProps={{
@@ -199,7 +201,7 @@ export default function Waitlist() {
               }}
             />
 
-            {/* Company Type Dropdown */}
+            {/* Company Type Field with Dropdown */}
             <Typography
               variant="subtitle1"
               sx={{
@@ -232,7 +234,7 @@ export default function Waitlist() {
                   "&.Mui-focused fieldset": { borderColor: "black" },
                 },
                 "& .MuiSelect-icon": {
-                  color: "black",
+                  color: "black", // Set the arrow color to black
                 },
               }}
               SelectProps={{
@@ -240,9 +242,9 @@ export default function Waitlist() {
                 MenuProps: {
                   PaperProps: {
                     sx: {
-                      bgcolor: "#e0e0e0",
+                      bgcolor: "#e0e0e0", // Set dropdown background color
                       "& .MuiMenuItem-root": {
-                        color: "black",
+                        color: "black", // Set dropdown item text color to black
                       },
                       "& .Mui-selected": {
                         backgroundColor: "#c0c0c0 !important",
@@ -265,12 +267,11 @@ export default function Waitlist() {
               <MenuItem value="other">Other</MenuItem>
             </TextField>
 
-            {/* Conditional Payment Question */}
-            {(companyType === "recruiting_agency" ||
-              companyType === "series_c_plus" ||
-              companyType === "large_corp" ||
-              companyType === "other" ||
-              companyType === "university_college") && (
+            {/* Conditional Payment Field */}
+            {companyType === "recruiting_agency" ||
+            companyType === "series_c_plus" ||
+            companyType === "large_corp" ||
+            companyType === "university_college" ? (
               <>
                 <Typography
                   variant="subtitle1"
@@ -281,9 +282,8 @@ export default function Waitlist() {
                     marginBottom: "4px",
                   }}
                 >
-                  {companyType === "university_college"
-                    ? "How much would you pay monthly for an AI tool to improve student job placement rates?"
-                    : "How much would you pay monthly for an AI agent to screen candidates for you?"}
+                  How much would you pay for an AI agent to screen candidates
+                  every month?:
                 </Typography>
                 <TextField
                   placeholder="2500"
@@ -293,7 +293,7 @@ export default function Waitlist() {
                   margin="dense"
                   required
                   value={payment}
-                  onChange={(e) => setPayment(e.target.value)}
+                  onChange={(e) => setPayment(e.target.value)} // Added onChange handler
                   InputProps={{
                     style: { color: "black", fontFamily: "Inter, sans-serif" },
                   }}
@@ -306,7 +306,7 @@ export default function Waitlist() {
                   }}
                 />
               </>
-            )}
+            ) : null}
 
             <Button
               type="submit"
@@ -318,7 +318,7 @@ export default function Waitlist() {
                 fontWeight: "bold",
                 fontFamily: "Inter, sans-serif",
               }}
-              disabled={!isFormValid} // Disable button until form is valid
+              disabled={!isFormValid}
             >
               Join Waitlist
             </Button>
