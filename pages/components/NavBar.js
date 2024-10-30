@@ -31,7 +31,7 @@ export default function NavBar() {
       style={{
         backgroundColor: "transparent",
         boxShadow: "none",
-        zIndex: 10, // Ensure navbar is above other elements
+        zIndex: 1000,
       }}
       elevation={0}
     >
@@ -40,6 +40,7 @@ export default function NavBar() {
           justifyContent: "space-between",
           px: 2,
           fontFamily: "Inter, sans-serif",
+          zIndex: 1000,
         }}
       >
         {/* Logo Image with Link to Homepage */}
@@ -66,7 +67,7 @@ export default function NavBar() {
 
         {isMobile ? (
           <>
-            {/* Mobile Menu Icon */}
+            {/* Larger Menu Icon for Mobile */}
             <IconButton
               edge="end"
               color="inherit"
@@ -100,40 +101,46 @@ export default function NavBar() {
               <MenuItem onClick={handleMenuClose}>
                 <Link href="/waitlist" passHref>
                   <Button
+                    component="a"
+                    href="/waitlist"
                     sx={{
                       color: "#ffffff",
+                      fontSize: "1.1rem",
                       fontFamily: "Inter, sans-serif",
-                      fontSize: "1.5rem",
-                      textTransform: "none",
-                      width: "100%",
+                      fontWeight: "bold",
+                      backgroundColor: "transparent",
+                      "&:hover": {
+                        color: "#888888",
+                        backgroundColor: "transparent",
+                      },
                     }}
                   >
                     Join Waitlist
                   </Button>
-                </Link>
-              </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
-                <Link
-                  href="https://calendly.com/contrarioai/contrario"
-                  passHref
-                >
+
                   <Button
+                    component="a"
+                    href="https://calendly.com/contrarioai/contrario"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     variant="outlined"
                     sx={{
-                      color: "#ffffff",
-                      backgroundColor: "#000000",
+                      color: "#000000",
+                      backgroundColor: "#ffffff",
                       borderColor: "#ffffff",
+                      fontSize: "1.1rem",
+                      padding: "8px 16px",
                       fontFamily: "Inter, sans-serif",
-                      fontSize: "1.5rem",
-                      textTransform: "none",
-                      width: "100%",
                       "&:hover": {
-                        backgroundColor: "#ffffff",
-                        color: "#000000",
+                        backgroundColor: "#000000",
+                        color: "#ffffff",
                       },
                     }}
                   >
-                    Get Started
+                    Get Started{" "}
+                    <span style={{ marginLeft: "8px", fontSize: "1rem" }}>
+                      ↗
+                    </span>
                   </Button>
                 </Link>
               </MenuItem>
@@ -161,7 +168,12 @@ export default function NavBar() {
             </Link>
 
             {/* Get Started Button */}
-            <Link href="https://calendly.com/contrarioai/contrario" passHref>
+            <Link
+              href="https://calendly.com/contrarioai/contrario"
+              passHref
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Button
                 variant="outlined"
                 sx={{
@@ -177,7 +189,8 @@ export default function NavBar() {
                   },
                 }}
               >
-                Get Started
+                Get Started{" "}
+                <span style={{ marginLeft: "8px", fontSize: "1rem" }}>↗</span>
               </Button>
             </Link>
           </Box>
