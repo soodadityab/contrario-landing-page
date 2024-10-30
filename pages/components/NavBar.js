@@ -37,7 +37,7 @@ export default function NavBar() {
       <Toolbar
         sx={{
           justifyContent: "space-between",
-          px: 2, // Slightly closer to edges
+          px: 2,
           fontFamily: "Inter, sans-serif",
         }}
       >
@@ -49,7 +49,7 @@ export default function NavBar() {
               display: "flex",
               alignItems: "center",
               marginTop: "12px",
-              marginLeft: "4px", // Align closer to the left edge
+              marginLeft: "4px",
             }}
           >
             <Image
@@ -71,8 +71,8 @@ export default function NavBar() {
               color="inherit"
               onClick={handleMenuOpen}
               sx={{
-                marginRight: "4px", // Align closer to the right edge
-                fontSize: "2rem", // Increase size of the icon
+                marginRight: "4px",
+                fontSize: "2rem",
               }}
             >
               <MenuIcon fontSize="inherit" />
@@ -83,11 +83,11 @@ export default function NavBar() {
               onClose={handleMenuClose}
               PaperProps={{
                 style: {
-                  backgroundColor: "black", // Black background
-                  color: "#ffffff", // White text
-                  width: "100%", // Full width dropdown
-                  top: "110px", // Drop down below the header
-                  left: 0, // Align to the very left
+                  backgroundColor: "black",
+                  color: "#ffffff",
+                  width: "100%",
+                  top: "110px",
+                  left: 0,
                   marginTop: "20px",
                 },
               }}
@@ -102,7 +102,7 @@ export default function NavBar() {
                     sx={{
                       color: "#ffffff",
                       fontFamily: "Inter, sans-serif",
-                      fontSize: "1.5rem", // Larger text
+                      fontSize: "1.5rem",
                       textTransform: "none",
                     }}
                   >
@@ -111,32 +111,36 @@ export default function NavBar() {
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleMenuClose}>
-                <Button
-                  variant="outlined"
-                  sx={{
-                    color: "#ffffff",
-                    backgroundColor: "#000000",
-                    borderColor: "#ffffff",
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "1.5rem", // Larger text
-                    textTransform: "none",
-                    "&:hover": {
-                      backgroundColor: "#ffffff",
-                      color: "#000000",
-                    },
-                  }}
+                <Link
                   href="https://calendly.com/contrarioai/contrario"
+                  passHref
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Get Started
-                </Button>
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      color: "#ffffff",
+                      backgroundColor: "#000000",
+                      borderColor: "#ffffff",
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: "1.5rem",
+                      textTransform: "none",
+                      "&:hover": {
+                        backgroundColor: "#ffffff",
+                        color: "#000000",
+                      },
+                    }}
+                  >
+                    Get Started
+                  </Button>
+                </Link>
               </MenuItem>
             </Menu>
           </>
         ) : (
           <Box display="flex" alignItems="center" sx={{ gap: 4, mr: 2 }}>
-            {/* Waitlist Button */}
+            {/* Join Waitlist Button */}
             <Link href="/waitlist" passHref>
               <Button
                 sx={{
@@ -156,27 +160,31 @@ export default function NavBar() {
             </Link>
 
             {/* Get Started Button */}
-            <Button
-              variant="outlined"
-              sx={{
-                color: "#000000",
-                backgroundColor: "#ffffff",
-                borderColor: "#ffffff",
-                fontSize: "1.1rem",
-                padding: "8px 16px",
-                fontFamily: "Inter, sans-serif",
-                "&:hover": {
-                  backgroundColor: "#000000",
-                  color: "#ffffff",
-                },
-              }}
+            <Link
               href="https://calendly.com/contrarioai/contrario"
+              passHref
               target="_blank"
               rel="noopener noreferrer"
             >
-              Get Started{" "}
-              <span style={{ marginLeft: "8px", fontSize: "1rem" }}>↗</span>
-            </Button>
+              <Button
+                variant="outlined"
+                sx={{
+                  color: "#000000",
+                  backgroundColor: "#ffffff",
+                  borderColor: "#ffffff",
+                  fontSize: "1.1rem",
+                  padding: "8px 16px",
+                  fontFamily: "Inter, sans-serif",
+                  "&:hover": {
+                    backgroundColor: "#000000",
+                    color: "#ffffff",
+                  },
+                }}
+              >
+                Get Started{" "}
+                <span style={{ marginLeft: "8px", fontSize: "1rem" }}>↗</span>
+              </Button>
+            </Link>
           </Box>
         )}
       </Toolbar>
