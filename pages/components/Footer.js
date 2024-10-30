@@ -34,6 +34,8 @@ const ScrollingContent = styled(Box)({
   display: "flex",
   alignItems: "center",
   animation: `${scrollAnimation} 30s linear infinite`,
+  animationPlayState: "running", // Ensure animation keeps running
+  animationFillMode: "forwards", // Maintain the animation state
   whiteSpace: "nowrap",
   willChange: "transform",
   width: "auto", // Adjust width to fit content
