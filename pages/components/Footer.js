@@ -131,28 +131,20 @@ export default function Footer() {
         {/* Scrolling Logo Row */}
         <ScrollingContainer>
           <ScrollingContent>
-            {logos.map((logo, index) => (
-              <LogoBox key={index}>
-                <Image
-                  src={logo.src}
-                  alt={logo.alt}
-                  width={logo.width}
-                  height={logo.height}
-                  style={{ objectFit: "contain", maxHeight: "100%" }}
-                />
-              </LogoBox>
-            ))}
-            {logos.map((logo, index) => (
-              <LogoBox key={`dup-${index}`}>
-                <Image
-                  src={logo.src}
-                  alt={logo.alt}
-                  width={logo.width}
-                  height={logo.height}
-                  style={{ objectFit: "contain", maxHeight: "100%" }}
-                />
-              </LogoBox>
-            ))}
+            {Array(3)
+              .fill(logos)
+              .flat()
+              .map((logo, index) => (
+                <LogoBox key={`dup-${index}`}>
+                  <Image
+                    src={logo.src}
+                    alt={logo.alt}
+                    width={logo.width}
+                    height={logo.height}
+                    style={{ objectFit: "contain", maxHeight: "100%" }}
+                  />
+                </LogoBox>
+              ))}
           </ScrollingContent>
         </ScrollingContainer>
 
