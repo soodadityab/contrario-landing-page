@@ -31,6 +31,7 @@ export default function NavBar() {
       style={{
         backgroundColor: "transparent",
         boxShadow: "none",
+        zIndex: 10, // Ensure navbar is above other elements
       }}
       elevation={0}
     >
@@ -65,7 +66,7 @@ export default function NavBar() {
 
         {isMobile ? (
           <>
-            {/* Larger Menu Icon for Mobile */}
+            {/* Mobile Menu Icon */}
             <IconButton
               edge="end"
               color="inherit"
@@ -104,6 +105,7 @@ export default function NavBar() {
                       fontFamily: "Inter, sans-serif",
                       fontSize: "1.5rem",
                       textTransform: "none",
+                      width: "100%",
                     }}
                   >
                     Join Waitlist
@@ -114,8 +116,6 @@ export default function NavBar() {
                 <Link
                   href="https://calendly.com/contrarioai/contrario"
                   passHref
-                  target="_blank"
-                  rel="noopener noreferrer"
                 >
                   <Button
                     variant="outlined"
@@ -126,6 +126,7 @@ export default function NavBar() {
                       fontFamily: "Inter, sans-serif",
                       fontSize: "1.5rem",
                       textTransform: "none",
+                      width: "100%",
                       "&:hover": {
                         backgroundColor: "#ffffff",
                         color: "#000000",
@@ -160,12 +161,7 @@ export default function NavBar() {
             </Link>
 
             {/* Get Started Button */}
-            <Link
-              href="https://calendly.com/contrarioai/contrario"
-              passHref
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link href="https://calendly.com/contrarioai/contrario" passHref>
               <Button
                 variant="outlined"
                 sx={{
@@ -181,8 +177,7 @@ export default function NavBar() {
                   },
                 }}
               >
-                Get Started{" "}
-                <span style={{ marginLeft: "8px", fontSize: "1rem" }}>↗</span>
+                Get Started
               </Button>
             </Link>
           </Box>
