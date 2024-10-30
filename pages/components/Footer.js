@@ -4,10 +4,10 @@ import { styled, keyframes } from "@mui/system";
 import Image from "next/image";
 import Link from "next/link";
 
-// Keyframes for scrolling animation
+// Keyframes for smooth infinite scroll animation
 const scrollAnimation = keyframes`
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  100% { transform: translateX(-100%); }
 `;
 
 // Styled Footer Section
@@ -29,16 +29,19 @@ const ScrollingContainer = styled(Box)(({ theme }) => ({
   padding: theme.spacing(2, 0),
 }));
 
-// Inner Scrolling Content
+// Inner Scrolling Content with auto width and infinite animation
 const ScrollingContent = styled(Box)({
   display: "flex",
   alignItems: "center",
   animation: `${scrollAnimation} 30s linear infinite`,
+  animationPlayState: "running", // Ensure animation keeps running
+  animationFillMode: "forwards", // Maintain the animation state
   whiteSpace: "nowrap",
   willChange: "transform",
+  width: "auto", // Adjust width to fit content
 });
 
-// Logo Container Box for setting consistent height
+// Logo Container Box for consistent height
 const LogoBox = styled(Box)({
   flex: "0 0 auto",
   height: "80px",
@@ -77,6 +80,9 @@ const logos = [
   },
 ];
 
+// Duplicate logos array to fill space for seamless scroll
+const repeatingLogos = [...logos, ...logos];
+
 export default function Footer() {
   return (
     <FooterSection>
@@ -85,15 +91,14 @@ export default function Footer() {
           container
           spacing={2}
           direction="row"
-          wrap="nowrap" // Prevents wrapping
+          wrap="nowrap"
           alignItems="center"
           justifyContent="space-between"
           sx={{
-            flexDirection: { xs: "row", sm: "row" }, // Row on all screen sizes
-            overflowX: "auto", // Allows scrolling on very small screens
+            flexDirection: { xs: "row", sm: "row" },
+            overflowX: "auto",
           }}
         >
-          {/* Left-aligned Title */}
           <Grid item xs={6}>
             <Typography
               variant="h3"
@@ -110,7 +115,6 @@ export default function Footer() {
             </Typography>
           </Grid>
 
-          {/* Right-aligned Description */}
           <Grid item xs={6}>
             <Typography
               variant="body1"
@@ -131,19 +135,8 @@ export default function Footer() {
         {/* Scrolling Logo Row */}
         <ScrollingContainer>
           <ScrollingContent>
-            {logos.map((logo, index) => (
-              <LogoBox key={index}>
-                <Image
-                  src={logo.src}
-                  alt={logo.alt}
-                  width={logo.width}
-                  height={logo.height}
-                  style={{ objectFit: "contain", maxHeight: "100%" }}
-                />
-              </LogoBox>
-            ))}
-            {logos.map((logo, index) => (
-              <LogoBox key={`dup-${index}`}>
+            {repeatingLogos.map((logo, index) => (
+              <LogoBox key={`logo-${index}`}>
                 <Image
                   src={logo.src}
                   alt={logo.alt}
@@ -156,7 +149,6 @@ export default function Footer() {
           </ScrollingContent>
         </ScrollingContainer>
 
-        {/* Footer Bottom Row */}
         <Box
           mt={4}
           display="flex"

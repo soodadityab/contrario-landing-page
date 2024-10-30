@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { useMediaQuery } from "@mui/material";
 
@@ -42,30 +41,30 @@ export default function NavBar() {
         }}
       >
         {/* Logo Image with Link to Homepage */}
-        <Link href="/" passHref>
-          <Box
-            sx={{
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              marginTop: "12px",
-              marginLeft: "4px",
-            }}
-          >
-            <Image
-              src="/logo.png"
-              alt="Contrario AI Logo"
-              width={200}
-              height={80}
-              layout="intrinsic"
-              priority
-            />
-          </Box>
-        </Link>
+        <Box
+          component="a"
+          href="/"
+          sx={{
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            marginTop: "12px",
+            marginLeft: "4px",
+          }}
+        >
+          <Image
+            src="/logo.png"
+            alt="Contrario AI Logo"
+            width={200}
+            height={80}
+            layout="intrinsic"
+            priority
+          />
+        </Box>
 
         {isMobile ? (
           <>
-            {/* Larger Menu Icon for Mobile */}
+            {/* Mobile Menu Icon */}
             <IconButton
               edge="end"
               color="inherit"
@@ -88,6 +87,11 @@ export default function NavBar() {
                   width: "100%",
                   top: "110px",
                   left: 0,
+                  backgroundColor: "black",
+                  color: "#ffffff",
+                  width: "100%",
+                  top: "110px",
+                  left: 0,
                   marginTop: "20px",
                 },
               }}
@@ -96,13 +100,14 @@ export default function NavBar() {
                 horizontal: "right",
               }}
             >
+              {/* Waitlist Menu Item */}
               <MenuItem onClick={handleMenuClose}>
                 <Link href="/waitlist" passHref>
                   <Button
                     sx={{
                       color: "#ffffff",
                       fontFamily: "Inter, sans-serif",
-                      fontSize: "1.5rem",
+                      fontSize: "1.5rem", // Larger text
                       textTransform: "none",
                     }}
                   >
@@ -110,37 +115,34 @@ export default function NavBar() {
                   </Button>
                 </Link>
               </MenuItem>
+              {/* Get Started Menu Item */}
               <MenuItem onClick={handleMenuClose}>
-                <Link
+                <Button
+                  variant="outlined"
+                  sx={{
+                    color: "#ffffff",
+                    backgroundColor: "#000000",
+                    borderColor: "#ffffff",
+                    fontFamily: "Inter, sans-serif",
+                    fontSize: "1.5rem", // Larger text
+                    textTransform: "none",
+                    "&:hover": {
+                      backgroundColor: "#ffffff",
+                      color: "#000000",
+                    },
+                  }}
                   href="https://calendly.com/contrarioai/contrario"
-                  passHref
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      color: "#ffffff",
-                      backgroundColor: "#000000",
-                      borderColor: "#ffffff",
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "1.5rem",
-                      textTransform: "none",
-                      "&:hover": {
-                        backgroundColor: "#ffffff",
-                        color: "#000000",
-                      },
-                    }}
-                  >
-                    Get Started
-                  </Button>
-                </Link>
+                  Get Started
+                </Button>
               </MenuItem>
             </Menu>
           </>
         ) : (
           <Box display="flex" alignItems="center" sx={{ gap: 4, mr: 2 }}>
-            {/* Join Waitlist Button */}
+            {/* Waitlist Button */}
             <Link href="/waitlist" passHref>
               <Button
                 sx={{
@@ -160,31 +162,27 @@ export default function NavBar() {
             </Link>
 
             {/* Get Started Button */}
-            <Link
+            <Button
+              variant="outlined"
+              sx={{
+                color: "#000000",
+                backgroundColor: "#ffffff",
+                borderColor: "#ffffff",
+                fontSize: "1.1rem",
+                padding: "8px 16px",
+                fontFamily: "Inter, sans-serif",
+                "&:hover": {
+                  backgroundColor: "#000000",
+                  color: "#ffffff",
+                },
+              }}
               href="https://calendly.com/contrarioai/contrario"
-              passHref
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button
-                variant="outlined"
-                sx={{
-                  color: "#000000",
-                  backgroundColor: "#ffffff",
-                  borderColor: "#ffffff",
-                  fontSize: "1.1rem",
-                  padding: "8px 16px",
-                  fontFamily: "Inter, sans-serif",
-                  "&:hover": {
-                    backgroundColor: "#000000",
-                    color: "#ffffff",
-                  },
-                }}
-              >
-                Get Started{" "}
-                <span style={{ marginLeft: "8px", fontSize: "1rem" }}>↗</span>
-              </Button>
-            </Link>
+              Get Started{" "}
+              <span style={{ marginLeft: "8px", fontSize: "1rem" }}>↗</span>
+            </Button>
           </Box>
         )}
       </Toolbar>
