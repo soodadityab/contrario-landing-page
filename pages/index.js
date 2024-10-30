@@ -58,7 +58,9 @@ export default function Home() {
                     Recruitment agencies, Series C+ companies, & talent
                     acquisition teams leverage Contrario to compress
                     time-to-hire, vet qualified candidates, and automate their
-                    hiring processes.
+                    hiring processes. Universities & colleges also use our
+                    software to prepare students for interviews and increase job
+                    placement success.
                   </Typography>
                 </Box>
               </Box>
@@ -130,7 +132,8 @@ export default function Home() {
                   Automatically screen candidates on technical and behavioral
                   skills tailored to their resume and job description, with
                   seamless integration into existing ATS and recruitment
-                  software for streamlined hiring decisions.
+                  software for streamlined hiring decisions and better job
+                  placements.
                 </Typography>
                 <Box sx={{ marginTop: "30px" }}>
                   <a
