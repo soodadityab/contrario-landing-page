@@ -85,7 +85,7 @@ export default function Waitlist() {
         <title>Waitlist | Contrario</title>
         <meta
           name="description"
-          content="Join the waitlist for Contrario's AI-powered talent screening tool."
+          content="Join the waitlist for Contarario AI."
         />
       </Head>
       {/* Navbar */}
