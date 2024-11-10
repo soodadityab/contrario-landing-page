@@ -46,7 +46,7 @@ export default function Home() {
       ),
       initialValue: 4700,
       finalValue: 2600,
-      label: "Lower cost per candidate",
+      label: "Total cost per candidate",
       prefix: "$",
       suffix: "",
     },
@@ -62,21 +62,19 @@ export default function Home() {
 
   function StatCard({ icon, initialValue, finalValue, label, prefix, suffix }) {
     const [value, setValue] = React.useState(initialValue);
-    const isCountingDownRef = React.useRef(true); // Ref to keep track of the animation direction
 
     React.useEffect(() => {
       let startTime;
-      const duration = 3000; // Animation duration
+      const duration = 3000; // Animation duration in milliseconds
 
       function animate(time) {
         if (!startTime) startTime = time;
         const elapsed = time - startTime;
         const progress = Math.min(elapsed / duration, 1);
 
-        // Calculate current value based on the direction
-        const currentValue = isCountingDownRef.current
-          ? initialValue + (finalValue - initialValue) * progress
-          : finalValue + (initialValue - finalValue) * progress;
+        // Calculate the current value based on progress
+        const currentValue =
+          initialValue + (finalValue - initialValue) * progress;
 
         setValue(Math.round(currentValue));
 
@@ -85,8 +83,6 @@ export default function Home() {
         } else {
           // Restart the animation after a delay
           setTimeout(() => {
-            // Toggle the direction
-            isCountingDownRef.current = !isCountingDownRef.current;
             startTime = null;
             requestAnimationFrame(animate);
           }, 3000); // Delay before restarting
