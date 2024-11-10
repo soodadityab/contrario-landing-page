@@ -395,7 +395,7 @@ export default function Home() {
                 >
                   Conversational AI agents review code snippets periodically and
                   answer questions in real-time, simulating a conversation with
-                  a live technical interviewer. Verify candidates' skills across
+                  a live technical interviewer. Verify candidate skills across
                   coding languages, with additional technical verification
                   methods launching soon.
                 </Typography>
