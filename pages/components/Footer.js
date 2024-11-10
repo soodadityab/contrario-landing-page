@@ -7,7 +7,7 @@ import Link from "next/link";
 // Keyframes for smooth infinite scroll animation
 const scrollAnimation = keyframes`
   0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
+  100% { transform: translateX(-50%); } // Shift by 50% to create seamless loop
 `;
 
 // Styled Footer Section
@@ -21,24 +21,19 @@ const FooterSection = styled(Box)(({ theme }) => ({
 
 // Scrolling Container for Logos
 const ScrollingContainer = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
   overflow: "hidden",
   width: "100%",
+  display: "flex",
+  justifyContent: "center",
   marginTop: theme.spacing(4),
-  padding: theme.spacing(2, 0),
 }));
 
-// Inner Scrolling Content with auto width and infinite animation
+// Inner Scrolling Content with infinite animation
 const ScrollingContent = styled(Box)({
   display: "flex",
-  alignItems: "center",
   animation: `${scrollAnimation} 30s linear infinite`,
-  animationPlayState: "running", // Ensure animation keeps running
-  animationFillMode: "forwards", // Maintain the animation state
   whiteSpace: "nowrap",
   willChange: "transform",
-  width: "auto", // Adjust width to fit content
 });
 
 // Logo Container Box for consistent height
@@ -80,7 +75,7 @@ const logos = [
   },
 ];
 
-// Duplicate logos array to fill space for seamless scroll
+// Duplicate logos array for seamless scroll
 const repeatingLogos = [...logos, ...logos];
 
 export default function Footer() {
@@ -94,10 +89,6 @@ export default function Footer() {
           wrap="nowrap"
           alignItems="center"
           justifyContent="space-between"
-          sx={{
-            flexDirection: { xs: "row", sm: "row" },
-            overflowX: "auto",
-          }}
         >
           <Grid item xs={6}>
             <Typography
@@ -107,14 +98,11 @@ export default function Footer() {
                 fontWeight: "bold",
                 textAlign: "left",
                 fontSize: { xs: "1.2rem", sm: "1.5rem" },
-                lineHeight: "1.2",
               }}
             >
-              Built by the Best <br />
-              Engineers From:
+              Built by the Best <br /> Engineers From:
             </Typography>
           </Grid>
-
           <Grid item xs={6}>
             <Typography
               variant="body1"
@@ -180,7 +168,6 @@ export default function Footer() {
                 Waitlist
               </Button>
             </Link>
-
             <Button
               sx={{
                 display: "inline-flex",
@@ -204,7 +191,6 @@ export default function Footer() {
               <span style={{ marginLeft: "8px", fontSize: "1rem" }}>↗</span>
             </Button>
           </Box>
-
           <Typography variant="body2" sx={{ mt: { xs: 2, sm: 0 } }}>
             © 2024 Contrario. All rights reserved.
           </Typography>

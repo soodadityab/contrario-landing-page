@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Image from "next/image";
+import NextLink from "next/link";
 import Link from "next/link";
 import { useState } from "react";
 import { useMediaQuery } from "@mui/material";
@@ -99,27 +100,34 @@ export default function NavBar() {
               }}
             >
               <MenuItem onClick={handleMenuClose}>
-                <Link href="/waitlist" passHref>
-                  <Button
-                    component="a"
-                    href="/waitlist"
-                    sx={{
-                      color: "#ffffff",
-                      fontSize: "1.1rem",
-                      fontFamily: "Inter, sans-serif",
-                      fontWeight: "bold",
-                      backgroundColor: "transparent",
-                      "&:hover": {
-                        color: "#888888",
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center"
+                  sx={{ width: "100%" }}
+                >
+                  {/* Join Waitlist Button */}
+                  <Link component={NextLink} href="/waitlist" passHref>
+                    <Button
+                      sx={{
+                        color: "#ffffff",
+                        fontSize: "1.1rem",
+                        fontFamily: "Inter, sans-serif",
+                        fontWeight: "bold",
                         backgroundColor: "transparent",
-                      },
-                    }}
-                  >
-                    Join Waitlist
-                  </Button>
+                        "&:hover": {
+                          color: "#888888",
+                          backgroundColor: "transparent",
+                        },
+                        width: "100%",
+                      }}
+                    >
+                      Join Waitlist
+                    </Button>
+                  </Link>
 
+                  {/* Get Started Button */}
                   <Button
-                    component="a"
                     href="https://calendly.com/contrarioai/contrario"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -135,6 +143,8 @@ export default function NavBar() {
                         backgroundColor: "#000000",
                         color: "#ffffff",
                       },
+                      mt: 1,
+                      width: "100%",
                     }}
                   >
                     Get Started{" "}
@@ -142,7 +152,7 @@ export default function NavBar() {
                       ↗
                     </span>
                   </Button>
-                </Link>
+                </Box>
               </MenuItem>
             </Menu>
           </>
@@ -168,31 +178,28 @@ export default function NavBar() {
             </Link>
 
             {/* Get Started Button */}
-            <Link
+            <Button
+              component="a"
               href="https://calendly.com/contrarioai/contrario"
-              passHref
               target="_blank"
               rel="noopener noreferrer"
+              variant="outlined"
+              sx={{
+                color: "#000000",
+                backgroundColor: "#ffffff",
+                borderColor: "#ffffff",
+                fontSize: "1.1rem",
+                padding: "8px 16px",
+                fontFamily: "Inter, sans-serif",
+                "&:hover": {
+                  backgroundColor: "#000000",
+                  color: "#ffffff",
+                },
+              }}
             >
-              <Button
-                variant="outlined"
-                sx={{
-                  color: "#000000",
-                  backgroundColor: "#ffffff",
-                  borderColor: "#ffffff",
-                  fontSize: "1.1rem",
-                  padding: "8px 16px",
-                  fontFamily: "Inter, sans-serif",
-                  "&:hover": {
-                    backgroundColor: "#000000",
-                    color: "#ffffff",
-                  },
-                }}
-              >
-                Get Started{" "}
-                <span style={{ marginLeft: "8px", fontSize: "1rem" }}>↗</span>
-              </Button>
-            </Link>
+              Get Started{" "}
+              <span style={{ marginLeft: "8px", fontSize: "1rem" }}>↗</span>
+            </Button>
           </Box>
         )}
       </Toolbar>
