@@ -62,6 +62,7 @@ export default function Home() {
 
   function StatCard({ icon, initialValue, finalValue, label, prefix, suffix }) {
     const [value, setValue] = React.useState(initialValue);
+    const isCountingDownRef = React.useRef(true); // Ref to keep track of the animation direction
 
     React.useEffect(() => {
       let startTime;
@@ -72,8 +73,11 @@ export default function Home() {
         const elapsed = time - startTime;
         const progress = Math.min(elapsed / duration, 1);
 
-        const currentValue =
-          initialValue + (finalValue - initialValue) * progress;
+        // Calculate current value based on the direction
+        const currentValue = isCountingDownRef.current
+          ? initialValue + (finalValue - initialValue) * progress
+          : finalValue + (initialValue - finalValue) * progress;
+
         setValue(Math.round(currentValue));
 
         if (progress < 1) {
@@ -81,10 +85,8 @@ export default function Home() {
         } else {
           // Restart the animation after a delay
           setTimeout(() => {
-            // Swap initial and final values for looping effect
-            const temp = initialValue;
-            initialValue = finalValue;
-            finalValue = temp;
+            // Toggle the direction
+            isCountingDownRef.current = !isCountingDownRef.current;
             startTime = null;
             requestAnimationFrame(animate);
           }, 3000); // Delay before restarting
@@ -102,8 +104,8 @@ export default function Home() {
     return (
       <Box
         sx={{
-          backgroundColor: "#000000", // Solid black background
-          color: "#ffffff", // White text color for numbers
+          backgroundColor: "#000000",
+          color: "#ffffff",
           padding: "24px",
           textAlign: "center",
           padding: "8px 0",
