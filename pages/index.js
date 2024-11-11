@@ -391,7 +391,7 @@ export default function Home() {
                   paragraph
                   sx={{ fontSize: "1rem", color: "#ddd", marginTop: "16px" }} // Changed color from "#555" to "#ddd"
                 >
-                  Conversational AI agents review code snippets periodically and
+                  Contrario AI agents review code snippets periodically and
                   answer questions in real-time, simulating a conversation with
                   a live technical interviewer. Verify candidate skills across
                   coding languages, with additional technical verification
@@ -460,7 +460,7 @@ export default function Home() {
                     letterSpacing: "1px",
                   }}
                 >
-                  Evaluative Feedback
+                  Instant Feedback
                 </Typography>
                 <Typography
                   variant="h1"
@@ -472,17 +472,18 @@ export default function Home() {
                     color: "#000",
                   }}
                 >
-                  Instant Talent Score Reports
+                  Personalized Talent Scorecards
                 </Typography>
                 <Typography
                   variant="body1"
                   paragraph
                   sx={{ fontSize: "1rem", color: "#555", marginTop: "16px" }}
                 >
-                  Receive detailed insights on candidate performance less than 9
-                  seconds after we screen, including behavioral and technical
-                  scores, detailed feedback notes, and a summarized interview
-                  transcript.
+                  At the end of every screening, we generate talent assessment
+                  scorecards in less than 5 seconds, detailing candidate scores,
+                  improvement strategies, and summarized interview transcripts
+                  that are instantly sent to recruiting & talent acqusition
+                  teams.
                 </Typography>
                 <Box sx={{ marginTop: "30px" }}>
                   <a
