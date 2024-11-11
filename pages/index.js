@@ -166,6 +166,36 @@ export default function Home() {
                     time-to-hire, vet qualified candidates, and automate their
                     hiring processes.
                   </Typography>
+                  {/* Demo Video Button */}
+                  <Button
+                    href="https://www.youtube.com/watch?v=grTjbvJSVhU&feature=youtu.be"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="outlined"
+                    sx={{
+                      color: "#000000",
+                      backgroundColor: "#ffffff",
+                      borderColor: "#ffffff",
+                      fontSize: "1.1rem",
+                      padding: "8px 16px",
+                      fontFamily: "Inter, sans-serif",
+                      "&:hover": {
+                        backgroundColor: "#000000",
+                        color: "#ffffff",
+                      },
+                      mt: 1,
+                      width: {
+                        xs: "80%",
+                        sm: "40%",
+                      },
+                      whitespace: "nowrap",
+                    }}
+                  >
+                    See Live Demo{" "}
+                    <span style={{ marginLeft: "8px", fontSize: "1rem" }}>
+                      ↗
+                    </span>
+                  </Button>
                 </Box>
               </Box>
             </Grid>
