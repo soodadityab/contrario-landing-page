@@ -46,7 +46,7 @@ const SoundWaveAnimation = () => {
         alignItems: "center",
         overflow: "hidden",
         backgroundColor: "transparent",
-        mt: -15,
+        mt: -8,
       }}
     >
       {/* SVG creating a centered spiral pattern */}
