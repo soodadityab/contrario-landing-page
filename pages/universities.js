@@ -1,15 +1,17 @@
+// Import necessary components
 import { Box, Typography, Button, Container, Grid } from "@mui/material";
 import { styled } from "@mui/system";
 import Image from "next/image";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import SoundWaveAnimation from "./components/SoundWaveAnimation";
-import React from "react";
-import CalendarIcon from "@mui/icons-material/CalendarToday"; // Or use an SVG import if specific
+import React, { useEffect } from "react";
+import CalendarIcon from "@mui/icons-material/CalendarToday";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import CheckmarkIcon from "@mui/icons-material/CheckCircle";
+import { useRouter } from "next/router";
 
-// Styled component for the hero section
+// Styled component for alternating section colors
 const Section = styled(Box, {
   shouldForwardProp: (prop) =>
     prop !== "bgColor" && prop !== "textColor" && prop !== "minHeight",
@@ -18,7 +20,7 @@ const Section = styled(Box, {
   color: textColor,
   display: "flex",
   alignItems: "center",
-  minHeight: minHeight || "100vh", // Default to '100vh' if minHeight is not provided
+  minHeight: minHeight || "100vh",
   padding: theme.spacing(8),
   [theme.breakpoints.down("sm")]: {
     padding: theme.spacing(4),
@@ -26,53 +28,57 @@ const Section = styled(Box, {
 }));
 
 export default function Home() {
-  // Updated statsData array
+  const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedMode = localStorage.getItem("isRecruitingMode");
+      if (
+        savedMode !== null &&
+        JSON.parse(savedMode) === false &&
+        router.pathname === "/universities"
+      ) {
+        // Redirect to / if toggle is off and we're on the wrong page
+        router.replace("/");
+      }
+    }
+  }, [router]);
+  // Realistic metrics for university/college career services
   const statsData = [
     {
-      icon: <CalendarIcon sx={{ fontSize: "3rem", color: "white" }} />,
-      initialValue: 44,
-      finalValue: 20,
-      label: "Days to hire candidates",
-      prefix: "",
+      icon: <CalendarIcon sx={{ fontSize: "3rem", color: "#000000" }} />, // Flipped color
+      initialValue: 90,
+      finalValue: 60,
+      label: "Days to Job Offer Post-Graduation",
     },
     {
-      icon: (
-        <BarChartIcon
-          sx={{
-            fontSize: "3rem",
-            color: "white",
-          }}
-        />
-      ),
-      initialValue: 4700,
-      finalValue: 2600,
-      label: "Total cost per candidate",
+      icon: <BarChartIcon sx={{ fontSize: "3rem", color: "#000000" }} />, // Flipped color
+      initialValue: 1200,
+      finalValue: 800,
+      label: "Career Services Cost per Student",
       prefix: "$",
-      suffix: "",
     },
     {
-      icon: <CheckmarkIcon sx={{ fontSize: "3rem", color: "white" }} />,
-      initialValue: 4,
-      finalValue: 12,
-      label: "Success rate of placing candidates",
-      prefix: "",
+      icon: <CheckmarkIcon sx={{ fontSize: "3rem", color: "#000000" }} />, // Flipped color
+      initialValue: 75,
+      finalValue: 85,
+      label: "Graduate Placement Rate",
       suffix: "%",
     },
   ];
 
+  // StatCard with flipped section colors
   function StatCard({ icon, initialValue, finalValue, label, prefix, suffix }) {
     const [value, setValue] = React.useState(initialValue);
 
     React.useEffect(() => {
       let startTime;
-      const duration = 3000; // Animation duration in milliseconds
+      const duration = 3000;
 
       function animate(time) {
         if (!startTime) startTime = time;
         const elapsed = time - startTime;
         const progress = Math.min(elapsed / duration, 1);
-
-        // Calculate the current value based on progress
         const currentValue =
           initialValue + (finalValue - initialValue) * progress;
 
@@ -81,17 +87,14 @@ export default function Home() {
         if (progress < 1) {
           requestAnimationFrame(animate);
         } else {
-          // Restart the animation after a delay
           setTimeout(() => {
             startTime = null;
             requestAnimationFrame(animate);
-          }, 3000); // Delay before restarting
+          }, 3000);
         }
       }
 
       requestAnimationFrame(animate);
-
-      // Cleanup function to prevent memory leaks
       return () => {
         startTime = null;
       };
@@ -100,8 +103,8 @@ export default function Home() {
     return (
       <Box
         sx={{
-          backgroundColor: "#000000",
-          color: "#ffffff",
+          backgroundColor: "#ffffff", // Flipped to white
+          color: "#000000", // Flipped to black
           padding: "24px",
           textAlign: "center",
           padding: "8px 0",
@@ -127,68 +130,61 @@ export default function Home() {
 
   return (
     <>
-      {/* Navbar at the top */}
       <NavBar />
 
-      {/* Hero Section */}
-      <Section bgColor="#000000" textColor="#ffffff" minHeight="100vh">
+      {/* Hero Section - Black background, white text */}
+      <Section bgColor="#ffffff" textColor="#000000" minHeight="100vh">
         <Container maxWidth="xl">
           <Grid container alignItems="center" spacing={4}>
-            {/* Left Side - Text Content */}
             <Grid item xs={12} md={6}>
               <Box sx={{ textAlign: "left", mt: 0 }}>
                 <Typography
                   variant="h1"
                   gutterBottom
                   sx={{
-                    fontSize: "clamp(2rem, 5vw, 4rem)", // Dynamically adjust font size for two lines
+                    fontSize: "clamp(2rem, 5vw, 4rem)",
                     fontWeight: "bold",
                     lineHeight: "1.2",
                     marginBottom: "20px",
                     maxWidth: "95%",
                   }}
                 >
-                  AI-Powered Talent Screening
+                  AI-Powered Mock Interivews
                 </Typography>
                 <Box sx={{ mt: 2 }}>
                   <Typography
                     variant="h5"
                     paragraph
                     sx={{
-                      fontSize: "clamp(1rem, 2.5vw, 1.4rem)", // Dynamically adjust font size for four lines
+                      fontSize: "clamp(1rem, 2.5vw, 1.4rem)",
                       lineHeight: "1.5",
                       marginBottom: "10px",
                       maxWidth: "95%",
                     }}
                   >
-                    Recruitment agencies, Series C+ companies, & talent
-                    acquisition teams leverage Contrario to compress
-                    time-to-hire, vet qualified candidates, and automate their
-                    hiring processes.
+                    University & college career centers rely on Contrario to
+                    prepare students with customized, real-world interview
+                    simulations, featuring questions tailored to top companies
+                    worldwide.
                   </Typography>
-                  {/* Demo Video Button */}
                   <Button
                     href="https://www.youtube.com/watch?v=grTjbvJSVhU&feature=youtu.be"
                     target="_blank"
                     rel="noopener noreferrer"
                     variant="outlined"
                     sx={{
-                      color: "#000000",
-                      backgroundColor: "#ffffff",
-                      borderColor: "#ffffff",
+                      color: "#ffffff",
+                      backgroundColor: "#000000",
+                      borderColor: "#000000",
                       fontSize: "1.1rem",
                       padding: "8px 16px",
                       fontFamily: "Inter, sans-serif",
                       "&:hover": {
-                        backgroundColor: "#000000",
-                        color: "#ffffff",
+                        backgroundColor: "#ffffff",
+                        color: "#000000",
                       },
                       mt: 1,
-                      width: {
-                        xs: "80%",
-                        sm: "40%",
-                      },
-                      whitespace: "nowrap",
+                      width: { xs: "80%", sm: "40%" },
                     }}
                   >
                     See Live Demo{" "}
@@ -200,7 +196,6 @@ export default function Home() {
               </Box>
             </Grid>
 
-            {/* Right Side - Centered Animation with reduced gap */}
             <Grid
               item
               xs={12}
@@ -212,17 +207,16 @@ export default function Home() {
               <SoundWaveAnimation />
             </Grid>
 
-            {/* Stats below Animation */}
             <Grid item xs={12} sx={{ mt: 4 }}>
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: { xs: "column", sm: "row" }, // Stack vertically on small screens
+                  flexDirection: { xs: "column", sm: "row" },
                   flexWrap: "wrap",
                   width: "100%",
                   margin: 0,
                   padding: 0,
-                  gap: { xs: 2, sm: 0 }, // Adds spacing between items on small screens
+                  gap: { xs: 2, sm: 0 },
                 }}
               >
                 {statsData.map((stat, index) => (
@@ -234,10 +228,10 @@ export default function Home() {
         </Container>
       </Section>
 
-      {/* Info Section */}
+      {/* Info Section - Black background, white text */}
       <Section
-        bgColor="#ffffff"
-        textColor="#000000"
+        bgColor="#000000"
+        textColor="#ffffff"
         style={{ fontFamily: "Inter, sans-serif" }}
       >
         <Container
@@ -258,12 +252,12 @@ export default function Home() {
                   display="block"
                   sx={{
                     fontSize: "1.2rem",
-                    color: "#666",
+                    color: "#ccc",
                     textTransform: "uppercase",
                     letterSpacing: "1px",
                   }}
                 >
-                  Custom Recruiting
+                  Interview Training
                 </Typography>
                 <Typography
                   variant="h1"
@@ -272,20 +266,21 @@ export default function Home() {
                     fontWeight: "700",
                     fontSize: "3rem",
                     lineHeight: "1.2",
-                    color: "#000",
+                    color: "#fff",
                   }}
                 >
-                  Recruiting Software for Faster Hires
+                  Career Prep Software for Student Success
                 </Typography>
                 <Typography
                   variant="body1"
                   paragraph
-                  sx={{ fontSize: "1rem", color: "#555", marginTop: "16px" }}
+                  sx={{ fontSize: "1rem", color: "#ddd", marginTop: "16px" }}
                 >
-                  Automatically screen candidates on technical and behavioral
-                  skills tailored to their resume and the company job
-                  description. We seamlessly integrate into existing ATS and
-                  recruitment software to streamline hiring decisions.
+                  Automatically evaluate students with tailored technical and
+                  behavioral asssessments based on their resumes and chosen
+                  career paths. Seamlessly integrates with career services
+                  software to boost student readiness and increase placement
+                  success.
                 </Typography>
                 <Box sx={{ marginTop: "30px" }}>
                   <a
@@ -298,8 +293,8 @@ export default function Home() {
                       sx={{
                         display: "inline-flex",
                         alignItems: "center",
-                        backgroundColor: "#000",
-                        color: "#fff",
+                        backgroundColor: "#ffffff",
+                        color: "#000000",
                         padding: "14px 28px",
                         borderRadius: "8px",
                         fontWeight: "600",
@@ -307,7 +302,6 @@ export default function Home() {
                         fontFamily: "Inter, sans-serif",
                         transition: "background-color 0.3s",
                         "&:hover": { backgroundColor: "#333" },
-                        marginBottom: { xs: 4, sm: 0 }, // Add this line
                       }}
                     >
                       Try Contrario Now{" "}
@@ -320,18 +314,17 @@ export default function Home() {
               </Box>
             </Grid>
 
-            {/* Right Side - Strategically Placed Larger Image on Mobile */}
             <Grid item xs={12} md={7}>
               <Box
                 sx={{
                   position: "relative",
-                  width: { xs: "100%", sm: "98%" }, // Full width on mobile, slight padding on larger screens
-                  padding: { xs: "0", sm: "10px" }, // Remove padding on mobile to maximize image size
+                  width: { xs: "100%", sm: "98%" },
+                  padding: { xs: "0", sm: "10px" },
                   border: "1px solid #e0e0e0",
                   borderRadius: { xs: "0", sm: "16px" },
                   boxShadow: { sm: "0 4px 12px rgba(0, 0, 0, 0.1)" },
                   overflow: "hidden",
-                  marginBottom: { xs: 3, sm: 4 },
+                  marginTop: { xs: "30px", sm: "0" }, // Added marginTop for mobile
                 }}
               >
                 <Image
@@ -349,8 +342,8 @@ export default function Home() {
       </Section>
       {/* Second Info Section */}
       <Section
-        bgColor="#000000" // Changed from "#ffffff" to "#000000"
-        textColor="#ffffff" // Changed from "#000000" to "#ffffff"
+        bgColor="#ffffff" // Changed from "#ffffff" to "#000000"
+        textColor="#000000" // Changed from "#000000" to "#ffffff"
         style={{ fontFamily: "Inter, sans-serif" }}
       >
         <Container
@@ -378,7 +371,7 @@ export default function Home() {
                 }}
               >
                 <Image
-                  src="/codingwhite.png"
+                  src="/coding.png"
                   alt="Contrario AI Product Interface"
                   layout="responsive"
                   width={1000}
@@ -397,12 +390,12 @@ export default function Home() {
                   display="block"
                   sx={{
                     fontSize: "1.2rem",
-                    color: "#ccc", // Changed from "#666" to "#ccc"
+                    color: "#666", // Changed from "#666" to "#ccc"
                     textTransform: "uppercase",
                     letterSpacing: "1px",
                   }}
                 >
-                  Skills Verification
+                  Skill Readiness
                 </Typography>
                 <Typography
                   variant="h1"
@@ -411,21 +404,20 @@ export default function Home() {
                     fontWeight: "700",
                     fontSize: "3rem",
                     lineHeight: "1.2",
-                    color: "#fff", // Changed from "#000" to "#fff"
+                    color: "#000", // Changed from "#000" to "#fff"
                   }}
                 >
-                  Live AI Coding Feedback
+                  Instant AI Coding Feedback
                 </Typography>
                 <Typography
                   variant="body1"
                   paragraph
-                  sx={{ fontSize: "1rem", color: "#ddd", marginTop: "16px" }} // Changed color from "#555" to "#ddd"
+                  sx={{ fontSize: "1rem", color: "#555", marginTop: "16px" }} // Changed color from "#555" to "#ddd"
                 >
-                  Contrario AI agents review code snippets periodically and
-                  answer questions in real-time, simulating a conversation with
-                  a live technical interviewer. Verify candidate skills across
-                  coding languages, with additional technical verification
-                  methods launching soon.
+                  Contrario provides students with hands-on coding practice,
+                  delivering real-time feedback that mirrors technical
+                  interviews. Prepares students across multiple coding
+                  languages, with additional assessment tools launching soon.
                 </Typography>
                 <Box sx={{ marginTop: "30px" }}>
                   <a
@@ -438,8 +430,8 @@ export default function Home() {
                       sx={{
                         display: "inline-flex",
                         alignItems: "center",
-                        backgroundColor: "#fff",
-                        color: "#000",
+                        backgroundColor: "#000",
+                        color: "#fff",
                         padding: "14px 28px",
                         borderRadius: "8px",
                         fontWeight: "600",
@@ -463,8 +455,8 @@ export default function Home() {
       </Section>
       {/* Third Info Section */}
       <Section
-        bgColor="#ffffff"
-        textColor="#000000"
+        bgColor="#000000"
+        textColor="#ffffff"
         style={{ fontFamily: "Inter, sans-serif", padding: 0, margin: 0 }}
       >
         <Container
@@ -485,12 +477,12 @@ export default function Home() {
                   display="block"
                   sx={{
                     fontSize: "1.2rem",
-                    color: "#666",
+                    color: "#fff",
                     textTransform: "uppercase",
                     letterSpacing: "1px",
                   }}
                 >
-                  Evaluation Reports
+                  Instant Feedback
                 </Typography>
                 <Typography
                   variant="h1"
@@ -499,21 +491,20 @@ export default function Home() {
                     fontWeight: "700",
                     fontSize: "3rem",
                     lineHeight: "1.2",
-                    color: "#000",
+                    color: "#fff",
                   }}
                 >
-                  Custom Candidate Scorecards
+                  Job Readiness Score
                 </Typography>
                 <Typography
                   variant="body1"
                   paragraph
-                  sx={{ fontSize: "1rem", color: "#555", marginTop: "16px" }}
+                  sx={{ fontSize: "1rem", color: "#fff", marginTop: "16px" }}
                 >
-                  At the end of every job screening, we generate talent
-                  assessment scorecards for each candidate in 2 seconds,
-                  detailing candidate scores, target development areas, and
-                  summarized interview transcripts that are instantly sent to
-                  recruiting & talent acqusition teams.
+                  After each mock interview, we generate a quick, detailed
+                  assessment for students, including skill scores and key focus
+                  areas for improvement — accessible immediately for self-guided
+                  practice.
                 </Typography>
                 <Box sx={{ marginTop: "30px" }}>
                   <a
@@ -526,8 +517,8 @@ export default function Home() {
                       sx={{
                         display: "inline-flex",
                         alignItems: "center",
-                        backgroundColor: "#000",
-                        color: "#fff",
+                        backgroundColor: "#fff",
+                        color: "#000",
                         padding: "14px 28px",
                         borderRadius: "8px",
                         fontWeight: "600",
@@ -574,7 +565,6 @@ export default function Home() {
         </Container>
       </Section>
 
-      {/* Footer */}
       <Footer />
     </>
   );

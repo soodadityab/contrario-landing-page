@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Typography, Container, Grid, Button } from "@mui/material";
 import { styled, keyframes } from "@mui/system";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router"; // Import useRouter
 
 // Keyframes for smooth infinite scroll animation
 const scrollAnimation = keyframes`
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); } // Shift by 50% to create seamless loop
+  100% { transform: translateX(-50%); }
 `;
 
 // Styled Footer Section
@@ -79,6 +80,26 @@ const logos = [
 const repeatingLogos = [...logos, ...logos];
 
 export default function Footer() {
+  // const router = useRouter(); // Initialize router
+  // const { pathname } = router;
+  const [isRecruitingMode, setIsRecruitingMode] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedMode = localStorage.getItem("isRecruitingMode");
+      if (savedMode !== null) {
+        setIsRecruitingMode(JSON.parse(savedMode));
+      } else {
+        setIsRecruitingMode(false); // Default mode
+      }
+    }
+  }, []);
+
+  // Conditionally set the description text
+  const descriptionText = isRecruitingMode
+    ? "Our team brings firsthand experience from Juniper Networks, NASA, and BCG, inspiring us to build Contrario AI to automate mock interviews for student success."
+    : "Our team brings firsthand experience from Juniper Networks, NASA, and BCG, inspiring us to build Contrario AI to streamline hiring through automation.";
+
   return (
     <FooterSection>
       <Container maxWidth="lg">
@@ -113,9 +134,7 @@ export default function Footer() {
                 fontSize: { xs: "0.8rem", sm: "1rem" },
               }}
             >
-              Our team brings firsthand experience from Juniper Networks, NASA,
-              and BCG, inspiring us to build Contrario AI to streamline hiring
-              through automation.
+              {descriptionText}
             </Typography>
           </Grid>
         </Grid>

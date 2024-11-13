@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -6,17 +7,33 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Typography,
+  Switch,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Image from "next/image";
 import NextLink from "next/link";
 import Link from "next/link";
-import { useState } from "react";
 import { useMediaQuery } from "@mui/material";
+import { useRouter } from "next/router";
 
 export default function NavBar() {
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [isRecruitingMode, setIsRecruitingMode] = useState(false);
   const isMobile = useMediaQuery("(max-width:800px)");
+
+  // Initialize isRecruitingMode from localStorage or router.pathname
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedMode = localStorage.getItem("isRecruitingMode");
+      if (savedMode !== null) {
+        setIsRecruitingMode(JSON.parse(savedMode));
+      } else {
+        setIsRecruitingMode(router.pathname === "/universities");
+      }
+    }
+  }, [router.pathname]);
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -25,6 +42,18 @@ export default function NavBar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
+  const handleSwitchToggle = () => {
+    const newMode = !isRecruitingMode;
+    setIsRecruitingMode(newMode);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("isRecruitingMode", JSON.stringify(newMode));
+    }
+    router.push(newMode ? "/universities" : "/");
+  };
+
+  // Hide toggle on the waitlist page
+  const showToggle = router.pathname !== "/waitlist";
 
   return (
     <AppBar
@@ -45,7 +74,7 @@ export default function NavBar() {
         }}
       >
         {/* Logo Image with Link to Homepage */}
-        <Link href="/" passHref>
+        <Link href={isRecruitingMode ? "/universities" : "/"} passHref>
           <Box
             sx={{
               cursor: "pointer",
@@ -66,9 +95,32 @@ export default function NavBar() {
           </Box>
         </Link>
 
+        {/* Toggle Switch in the Top Middle (Only on Desktop) */}
+        {!isMobile && showToggle && (
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            sx={{
+              position: "absolute",
+              left: "50%",
+              transform: "translateX(-50%)",
+            }}
+          >
+            <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+              {isRecruitingMode ? "Universities/Colleges" : "Recruiting Teams"}
+            </Typography>
+            <Switch
+              checked={isRecruitingMode}
+              onChange={handleSwitchToggle}
+              color="default"
+            />
+          </Box>
+        )}
+
         {isMobile ? (
           <>
-            {/* Larger Menu Icon for Mobile */}
+            {/* Menu Icon for Mobile */}
             <IconButton
               edge="end"
               color="inherit"
@@ -152,6 +204,32 @@ export default function NavBar() {
                       ↗
                     </span>
                   </Button>
+
+                  {/* Toggle Switch Below the "Get Started" Button */}
+                  {showToggle && (
+                    <Box
+                      display="flex"
+                      flexDirection="row"
+                      alignItems="center"
+                      sx={{ mt: 2 }}
+                    >
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          fontWeight: "bold",
+                          color: "#ffffff",
+                          mr: 1,
+                        }}
+                      >
+                        Universities:
+                      </Typography>
+                      <Switch
+                        checked={isRecruitingMode}
+                        onChange={handleSwitchToggle}
+                        color="default"
+                      />
+                    </Box>
+                  )}
                 </Box>
               </MenuItem>
             </Menu>

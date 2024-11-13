@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
+import { useRouter } from "next/router";
 
 const SoundWaveAnimation = () => {
   const words = [
@@ -13,6 +14,12 @@ const SoundWaveAnimation = () => {
   ];
   const [currentWord, setCurrentWord] = useState(words[0]);
   const [isFading, setIsFading] = useState(true);
+  const router = useRouter();
+  const isUniversitiesRoute = router.pathname === "/universities";
+  const centerTextColor = isUniversitiesRoute ? "#000000" : "#ffffff";
+  const spiralStrokeColor = isUniversitiesRoute
+    ? "hsl(200, 100%, 40%)"
+    : "hsl(200, 100%, 70%)";
 
   useEffect(() => {
     let index = 0;
@@ -52,7 +59,11 @@ const SoundWaveAnimation = () => {
               cx="600"
               cy="600"
               r={radius}
-              stroke={`hsl(${200 + i * 5}, 100%, 70%)`} // Adjusted gradient for a consistent flow
+              stroke={
+                isUniversitiesRoute
+                  ? `hsl(${200 + i * 5}, 100%, 50%)`
+                  : `hsl(${200 + i * 5}, 100%, 70%)`
+              }
               strokeWidth="1.2"
               fill="none"
               className="soundwave"
@@ -68,7 +79,7 @@ const SoundWaveAnimation = () => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          color: "#ffffff",
+          color: centerTextColor,
           fontSize: "2.3em", // Slightly reduced size for better proportional balance
           fontWeight: "bold",
           textAlign: "center",
