@@ -207,7 +207,7 @@ export default function Home() {
               md={6}
               display="flex"
               justifyContent="center"
-              sx={{ mt: -4 }}
+              sx={{ xs: 0, med: -4 }}
             >
               <SoundWaveAnimation />
             </Grid>

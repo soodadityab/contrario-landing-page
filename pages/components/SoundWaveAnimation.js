@@ -39,18 +39,29 @@ const SoundWaveAnimation = () => {
     <Box
       sx={{
         position: "relative",
-        width: "100%",
+        height: {
+          xs: "400px", // Reduced height on mobile devices
+          md: "800px",
+        },
         height: "800px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         overflow: "hidden",
         backgroundColor: "transparent",
-        mt: -8,
+        mt: {
+          xs: 0, // No negative margin on mobile
+          md: -8, // Negative margin on larger screens
+        },
       }}
     >
       {/* SVG creating a centered spiral pattern */}
-      <svg width="100%" height="100%" viewBox="0 0 1200 1200">
+      <svg
+        width="100%"
+        height="100%"
+        viewBox="0 0 1200 1200"
+        style={{ pointerEvents: "none" }}
+      >
         {[...Array(50)].map((_, i) => {
           const radius = 300 + i * 6; // Moderate spiral for better spacing
           return (
