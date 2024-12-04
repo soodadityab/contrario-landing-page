@@ -149,7 +149,7 @@ export default function Home() {
                     maxWidth: "95%",
                   }}
                 >
-                  AI-Powered Mock Interivews
+                  AI-Powered Mock Interviews
                 </Typography>
                 <Box sx={{ mt: 2 }}>
                   <Typography
